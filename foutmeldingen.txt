@@ -1,3 +1,4 @@
 1: De gebruiker bestaat niet
 2: Het wachtwoord is onjuist
 3: De verbinding met de server is mislukt
+4: De opgegeven wachtwoorden komen niet overeen.

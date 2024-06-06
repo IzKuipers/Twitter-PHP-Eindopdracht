@@ -1,5 +1,7 @@
 <?php
+require ("./util/error.php");
 
+geef_foutmelding_weer();
 
 function loginGebruiker()
 {
@@ -12,7 +14,7 @@ function loginGebruiker()
   $wachtwoordOpnieuw = $_POST["wachtwoordOpnieuw"];
 
   if ($wachtwoord != $wachtwoordOpnieuw) {
-    header("location: /error.php?id=1&continue=%2Fregistreer.php");
+    foutmelding(4);
 
     return;
   }

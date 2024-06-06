@@ -1,9 +1,12 @@
 <?php
+require ("./util/error.php");
+
 session_start();
+geef_foutmelding_weer();
 
 function loginGebruiker()
 {
-  if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST["gebruikersnaam"]) || !isset($_POST["wachtwoord"])) {
+  if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST["gebruikersnaam"], $_POST["wachtwoord"])) {
     return;
   }
 
@@ -26,7 +29,7 @@ function loginGebruiker()
   $wachtwoordKlopt = password_verify($wachtwoord, $wachtwoordHash);
 
   if (!$wachtwoordKlopt) {
-    header("location: /error.php?id=2&continue=%2Flogin.php");
+    foutmelding(2, "/login.php");
 
     return;
   }
