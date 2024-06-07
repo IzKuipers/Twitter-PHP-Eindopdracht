@@ -1,10 +1,12 @@
 <?php
+
 require ("./util/error.php");
+require ("./util/session.php");
 
 session_start();
 geef_foutmelding_weer();
 
-function loginGebruiker()
+function gebruikerInloggen()
 {
   if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST["gebruikersnaam"], $_POST["wachtwoord"])) {
     return;
@@ -13,18 +15,25 @@ function loginGebruiker()
   $gebruikersnaam = $_POST["gebruikersnaam"];
   $wachtwoord = $_POST["wachtwoord"];
 
-  $conn = new mysqli("127.0.0.1", "root", "", "eindopdracht");
+  $connectie = verbind_mysqli();
 
-  if ($conn->connect_error) {
-    return; // ERROR HANDLING
+  $query = "SELECT idGebruiker,wachtwoord,status FROM gebruikers WHERE naam=?";
+
+  try {
+    global $idGebruiker, $passwordHash, $status, $statement;
+
+    $statement = $connectie->prepare($query);
+    $statement->bind_param("s", $gebruikersnaam);
+    $statement->execute();
+    $statement->bind_result($idGebruiker, $wachtwoordHash, $status);
+    $statement->fetch();
+
+  } catch (Exception $e) {
+    sluit_mysqli($connectie, $statement);
+    foutmelding(6, "", $e->getMessage());
+  } finally {
+    sluit_mysqli($connectie, $statement);
   }
-
-  $query = "SELECT idGebruiker,wachtwoord FROM gebruikers WHERE naam=?";
-  $statement = $conn->prepare($query);
-  $statement->bind_param("s", $gebruikersnaam);
-  $statement->execute();
-  $statement->bind_result($idGebruiker, $wachtwoordHash);
-  $statement->fetch();
 
   $wachtwoordKlopt = password_verify($wachtwoord, $wachtwoordHash);
 
@@ -34,14 +43,14 @@ function loginGebruiker()
     return;
   }
 
-  $_SESSION["gebruikerid"] = $idGebruiker;
+  $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
 
   header("location: /index.php");
 
   var_dump($wachtwoordHash);
 }
 
-loginGebruiker();
+gebruikerInloggen();
 ?>
 
 <!DOCTYPE html>

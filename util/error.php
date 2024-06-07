@@ -1,7 +1,9 @@
 <?php
 require ("connectie.php");
 
-function foutmelding(int $id, string $continue = "")
+session_start();
+
+function foutmelding(int $id, string $continue = "", string $message = "")
 {
   $aanvraagUri = $_SERVER["REQUEST_URI"];
   $huidigeUrl = parse_url($aanvraagUri);
@@ -9,12 +11,15 @@ function foutmelding(int $id, string $continue = "")
 
   $volgendePagina = $continue or $paginaPad;
 
+  $_SESSION["error_message"] = $message;
+
   header("location: $paginaPad?error=$id&continue=$volgendePagina");
 }
 
 function geef_foutmelding_weer()
 {
   if (!isset($_GET["error"], $_GET["continue"])) {
+    unset($_SESSION["error_message"]);
     return;
   }
 
@@ -25,6 +30,7 @@ function geef_foutmelding_weer()
 
   $titel = "";
   $foutmelding = "";
+  $details = isset($_SESSION["error_message"]) ? $_SESSION["error_message"] : "<geen>";
 
   try {
     global $statement, $titel, $foutmelding;
@@ -35,6 +41,11 @@ function geef_foutmelding_weer()
 
     $statement->bind_result($id, $titel, $foutmelding);
     $statement->fetch();
+
+    if (!$titel) {
+      $titel = "Onbekende fout";
+      $foutmelding = "Er is een fout opgetreden die niet bekend is. De details geven mogelijk meer informatie over de fout. Onze excuses voor het ongemak.";
+    }
 
   } catch (Exception $e) {
     $titel = "Fout!";
@@ -49,6 +60,7 @@ function geef_foutmelding_weer()
         <div class="content">
           <h1>$titel</h1>
           <p>$foutmelding</p>
+          <p class="details">Details: <span>$details</span></p>
         </div>
         <div class="bottom">
           <a href="$continue">Sluiten</a>

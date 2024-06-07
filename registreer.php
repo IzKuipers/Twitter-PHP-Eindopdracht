@@ -3,7 +3,7 @@ require ("./util/error.php");
 
 geef_foutmelding_weer();
 
-function loginGebruiker()
+function registreerGebruiker()
 {
   if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST["gebruikersnaam"]) || !isset($_POST["wachtwoord"]) || !isset($_POST["wachtwoordOpnieuw"])) {
     return;
@@ -21,22 +21,28 @@ function loginGebruiker()
 
   $hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
-  $conn = new mysqli("127.0.0.1", "root", "", "eindopdracht");
+  $connectie = verbind_mysqli();
 
-  if ($conn->connect_error) {
-    return; // ERROR HANDLING
+  try {
+    global $statement;
+
+    $query = "INSERT INTO gebruikers(naam,wachtwoord) values (?,?)";
+    $statement = $connectie->prepare($query);
+    $statement->bind_param("ss", $gebruikersnaam, $hash);
+
+    $statement->execute();
+  } catch (Exception $e) {
+    foutmelding(5, "", $e->getMessage());
+
+    return;
+  } finally {
+    sluit_mysqli($connectie, $statement);
   }
-
-  $query = "INSERT INTO gebruikers(naam,wachtwoord) values (?,?)";
-  $statement = $conn->prepare($query);
-  $statement->bind_param("ss", $gebruikersnaam, $hash);
-
-  $statement->execute();
 
   header("location: /login.php");
 }
 
-loginGebruiker();
+registreerGebruiker();
 ?>
 <!DOCTYPE html>
 <html lang="en">
