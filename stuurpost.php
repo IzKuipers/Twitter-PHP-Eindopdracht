@@ -1,11 +1,11 @@
 <?php
 
-require ("./util/session.php");
-require ("./util/error.php");
+require_once ("./util/session.php");
+require_once ("./util/error.php");
 
 session_start();
 verifieer_ingelogd();
-
+geef_foutmelding_weer();
 
 if (!isset($_POST["bericht"])) {
   header("location:/");
@@ -13,8 +13,6 @@ if (!isset($_POST["bericht"])) {
 
 
 $gebruiker = gebruiker_uit_sessie();
-
-var_dump($gebruiker);
 
 $bericht = $_POST["bericht"];
 $likes = 0;

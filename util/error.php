@@ -1,5 +1,5 @@
 <?php
-require ("connectie.php");
+require_once ("connectie.php");
 
 session_start();
 

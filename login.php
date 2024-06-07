@@ -1,7 +1,7 @@
 <?php
 
-require ("./util/error.php");
-require ("./util/session.php");
+require_once ("./util/error.php");
+require_once ("./util/session.php");
 
 session_start();
 geef_foutmelding_weer();
@@ -46,8 +46,6 @@ function gebruikerInloggen()
   $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
 
   header("location: /index.php");
-
-  var_dump($wachtwoordHash);
 }
 
 gebruikerInloggen();

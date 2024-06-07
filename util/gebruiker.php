@@ -12,8 +12,8 @@ function gebruiker_ophalen($id)
     $statement = $connectie->prepare($query);
     $statement->bind_param("i", $id);
     $statement->execute();
-    $statement->fetch();
     $statement->bind_result($idGebruiker, $naam, $status);
+    $statement->fetch();
 
     return array("idGebruiker" => $idGebruiker, "naam" => $naam, "status" => $status);
   } catch (Exception $e) {

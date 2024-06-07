@@ -1,5 +1,5 @@
 <?php
-require ("./util/error.php");
+require_once ("./util/error.php");
 
 geef_foutmelding_weer();
 

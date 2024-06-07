@@ -25,12 +25,19 @@ function verbind_mysqli()
   }
 }
 
-function sluit_mysqli($connectie, $statement)
+function sluit_mysqli($connectie, ...$statements)
 {
   // Ik gebruik instanceof om te checken of de statement en
-  // connectie uberhaupt bestaan voordat ik ze probeer te sluiten, dat voorkomt fouten.
-  if (isset($statement) && $statement instanceof mysqli_stmt) {
-    $statement->close();
+  // connectie uberhaupt bestaan voordat ik ze probeer te sluiten,
+  // dat voorkomt onverwachte fouten.
+  foreach ($statements as $statement) {
+    if (isset($statement) && $statement instanceof mysqli_stmt) {
+      try {
+        $statement->close();
+      } catch (Exception $e) {
+        printf("Statement sluiten onderbroken: " . $e->getMessage());
+      }
+    }
   }
 
   if (isset($connectie) && $connectie instanceof mysqli) {

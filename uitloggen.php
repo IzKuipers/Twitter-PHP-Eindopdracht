@@ -1,4 +1,4 @@
 <?php
-require ("./util/session.php");
+require_once ("./util/session.php");
 
 uitloggen();

@@ -1,0 +1,30 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+header h1 {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  font-weight: 1000;
+}
+
+header span.sub {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.5;
+  color: dodgerblue;
+}
+
+header h1 {
+  font-size: 22px;
+}
+
+header div.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

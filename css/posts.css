@@ -1,0 +1,63 @@
+div.post-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+div.post-lijst div.post > div.right {
+  flex-grow: 1;
+  max-width: calc(100% - 58px);
+}
+
+div.post-lijst div.post {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  border-bottom: #ddd 1px solid;
+  padding: 0 20px;
+  padding-bottom: 5px;
+}
+
+div.post-lijst div.post img {
+  height: 48px;
+  border-radius: 50%;
+}
+
+div.post-lijst div.post div.auteur {
+  font-weight: bold;
+}
+
+div.post-lijst div.post div.auteur span.id {
+  font-weight: normal;
+  opacity: 0.5;
+}
+
+div.post-lijst div.post div.body {
+  word-break: break-all;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+div.post-lijst div.actions {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+div.post-lijst div.actions div.timestamp {
+  opacity: 0.3;
+}
+
+div.post-lijst div.actions a.like-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+div.post-lijst div.actions a.like-button span.material-icons-round {
+  color: tomato;
+  font-size: 20px;
+}
