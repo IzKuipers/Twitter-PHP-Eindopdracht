@@ -31,3 +31,11 @@ form.post-form input[type="submit"] {
   border: none;
   font-weight: bold;
 }
+
+form.post-form input[type="submit"]:hover {
+  background-color: rgb(92, 214, 255);
+}
+
+form.post-form input[type="submit"]:active {
+  background-color: rgb(0, 165, 220);
+}

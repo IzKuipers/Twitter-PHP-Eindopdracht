@@ -9,7 +9,7 @@ function foutmelding(int $id, string $continue = "", string $message = "")
   $huidigeUrl = parse_url($aanvraagUri);
   $paginaPad = $huidigeUrl['path'];
 
-  $volgendePagina = $continue or $paginaPad;
+  $volgendePagina = $continue;
 
   $_SESSION["error_message"] = $message;
 
@@ -30,7 +30,7 @@ function geef_foutmelding_weer()
 
   $titel = "";
   $foutmelding = "";
-  $details = isset($_SESSION["error_message"]) ? $_SESSION["error_message"] : "<geen>";
+  $details = (isset($_SESSION["error_message"]) ? $_SESSION["error_message"] : "(geen)");
 
   try {
     global $statement, $titel, $foutmelding;
@@ -55,6 +55,7 @@ function geef_foutmelding_weer()
   }
 
   echo <<<HTML
+    <link rel="stylesheet" href="/css/error.css">
     <div class="error-wrapper">
       <div class="error">
         <div class="content">
@@ -64,7 +65,7 @@ function geef_foutmelding_weer()
         </div>
         <div class="bottom">
           <a href="$continue">Sluiten</a>
-        </div>        
+        </div>
       </div>
     </div>
   HTML;

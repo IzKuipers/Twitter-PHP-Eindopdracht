@@ -18,6 +18,10 @@ div.post-lijst div.post {
   padding-bottom: 5px;
 }
 
+div.post-lijst div.post:last-child {
+  border-bottom: none;
+}
+
 div.post-lijst div.post img {
   height: 48px;
   border-radius: 50%;
@@ -42,22 +46,47 @@ div.post-lijst div.actions {
   width: 100%;
   margin-top: 10px;
   display: flex;
-  justify-content: space-between;
+  gap: 30px;
   align-items: center;
   padding: 10px 0;
 }
 
 div.post-lijst div.actions div.timestamp {
   opacity: 0.3;
+  margin-left: auto;
 }
 
-div.post-lijst div.actions a.like-button {
+div.post-lijst div.actions a {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+div.post-lijst div.actions a span.material-icons-round {
+  font-size: 20px;
+}
+
 div.post-lijst div.actions a.like-button span.material-icons-round {
   color: tomato;
-  font-size: 20px;
+}
+
+div.post-lijst div.actions a.delete-button span.material-icons-round {
+  color: rgb(103, 179, 103);
+}
+
+div.post-lijst p.geen {
+  margin: 0 auto;
+  width: fit-content;
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 75%;
+}
+div.post-lijst p.geen span.material-icons-round {
+  color: orange;
+}
+
+div.post-lijst p.geen span.bericht {
+  opacity: 0.5;
 }

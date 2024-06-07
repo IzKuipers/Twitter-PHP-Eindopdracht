@@ -27,6 +27,8 @@ function gebruiker_uit_sessie()
 
 function uitloggen()
 {
+  session_start();
+
   unset($_SESSION["gebruiker"]);
   header("location:/login.php");
 }

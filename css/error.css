@@ -1,0 +1,57 @@
+div.error-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0004;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+div.error-wrapper div.error {
+  background-color: #fff;
+  border-radius: 10px;
+  border: #ddd 2px solid;
+  padding: 20px;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+div.error-wrapper div.content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+div.error-wrapper div.error h1 {
+  font-size: 24px;
+}
+
+div.error-wrapper div.error a {
+  display: block;
+  background-color: deepskyblue;
+  height: 35px;
+  padding: 0 18px;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  font-weight: bold;
+  line-height: 35px;
+  margin-top: 20px;
+}
+
+div.error-wrapper div.error a:hover {
+  background-color: rgb(92, 214, 255);
+}
+
+div.error-wrapper div.error a:active {
+  background-color: rgb(0, 165, 220);
+}
+
+div.error-wrapper div.error p.details {
+  opacity: 0.5;
+}

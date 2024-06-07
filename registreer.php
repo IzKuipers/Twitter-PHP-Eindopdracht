@@ -10,6 +10,7 @@ function registreerGebruiker()
   }
 
   $gebruikersnaam = $_POST["gebruikersnaam"];
+  $gebruikersnaamVeilig = htmlspecialchars(trim($gebruikersnaam));
   $wachtwoord = $_POST["wachtwoord"];
   $wachtwoordOpnieuw = $_POST["wachtwoordOpnieuw"];
 
@@ -28,11 +29,11 @@ function registreerGebruiker()
 
     $query = "INSERT INTO gebruikers(naam,wachtwoord) values (?,?)";
     $statement = $connectie->prepare($query);
-    $statement->bind_param("ss", $gebruikersnaam, $hash);
+    $statement->bind_param("ss", $gebruikersnaamVeilig, $hash);
 
     $statement->execute();
   } catch (Exception $e) {
-    foutmelding(5, "", $e->getMessage());
+    foutmelding(5, "/registreer.php", $e->getMessage());
 
     return;
   } finally {
@@ -51,6 +52,7 @@ registreerGebruiker();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>

@@ -23,7 +23,7 @@ $gebruiker = gebruiker_uit_sessie();
 <body>
   <header>
     <div class="left">
-      <h1>Twitter<span class="sub">(de echte)</span></h1>
+      <h1>Twitter<span class="sub">(PHP)</span></h1>
     </div>
     <div class="right">
       <div class="user">

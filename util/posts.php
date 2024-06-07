@@ -60,12 +60,22 @@ function post_lijst()
 
   echo "<div class='post-lijst'>";
 
+  if (count($posts) == 0) {
+    echo <<<HTML
+      <p class="geen">
+        <span class="material-icons-round">warning</span>
+        <span class="bericht">De dood van het universum is hier! Er zijn geen posts. Zal jij de eerste tweet sturen?</span>
+      </p>
+    HTML;
+  }
+
   foreach ($posts as $post) {
     $body = $post['body'];
+    $bodyVeilig = htmlspecialchars($body);
     $gebruikersnaam = $post['auteur']['naam'];
     $id = $post['id'];
     $aantal_likes = $post["likes"];
-    $timestamp = $post["timestamp"];
+    $timestamp = date("j M · G:i", strtotime($post["timestamp"]));
 
     echo <<<HTML
       <div class='post'>
@@ -78,12 +88,16 @@ function post_lijst()
             <span class="id">· Post #$id</span>
           </div>  
           <div class="body">
-            $body
+            $bodyVeilig
           </div>
           <div class="actions">
             <a href="/like.php?id=$id" class="like-button">
               <span class='material-icons-round'>favorite_outline</span>
               $aantal_likes
+            </a>
+            <a href="/verwijder.php?id=$id" class="delete-button">
+              <span class='material-icons-round'>delete</span>
+              Verwijder
             </a>
             <div class="timestamp">
               $timestamp
