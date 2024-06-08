@@ -25,25 +25,25 @@ if (!isset($_GET["id"])) {
 $id = $_GET["id"];
 
 try {
-  global $id_statement, $update_statement;
+  global $idStatement, $updateStatement;
 
-  $id_statement = $connectie->prepare("SELECT likes FROM posts WHERE idPost = ?");
-  $id_statement->bind_param("i", $id);
-  $id_statement->execute();
-  $id_statement->bind_result($likes);
-  $id_statement->fetch();
-  $id_statement->close();
+  $idStatement = $connectie->prepare("SELECT likes FROM posts WHERE idPost = ?");
+  $idStatement->bind_param("i", $id);
+  $idStatement->execute();
+  $idStatement->bind_result($likes);
+  $idStatement->fetch();
+  $idStatement->close();
 
   $likes++;
 
   $query = "UPDATE posts SET likes = ? WHERE idPost = ?";
 
-  $update_statement = $connectie->prepare($query);
-  $update_statement->bind_param("ii", $likes, $id);
-  $update_statement->execute();
+  $updateStatement = $connectie->prepare($query);
+  $updateStatement->bind_param("ii", $likes, $id);
+  $updateStatement->execute();
 } catch (Exception $e) {
   foutmelding(7, "/", $e->getMessage());
 } finally {
-  sluit_mysqli($connectie, $update_statement);
+  sluit_mysqli($connectie, $updateStatement);
   echo "<script>history.back();</script>";
 }

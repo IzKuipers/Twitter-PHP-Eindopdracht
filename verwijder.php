@@ -22,7 +22,7 @@ if (!isset($_GET["id"])) {
 $id = $_GET["id"];
 
 try {
-  global $id_statement;
+  global $idStatement;
 
   $auteur_statement = $connectie->prepare("SELECT auteur FROM posts WHERE idPost = ?");
   $auteur_statement->bind_param("i", $id);
@@ -35,10 +35,10 @@ try {
     return;
   }
 
-  $id_statement = $connectie->prepare("DELETE FROM posts WHERE idPost = ?");
-  $id_statement->bind_param("i", $id);
-  $id_statement->execute();
-  $id_statement->close();
+  $idStatement = $connectie->prepare("DELETE FROM posts WHERE idPost = ?");
+  $idStatement->bind_param("i", $id);
+  $idStatement->execute();
+  $idStatement->close();
 } catch (Exception $e) {
   foutmelding(7, "/", $e->getMessage());
 } finally {
