@@ -1,0 +1,62 @@
+@import url("./base.css");
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: skyblue;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: white;
+  border: #ddd 1px solid;
+  border-radius: 10px;
+}
+
+main form {
+  display: Flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+main form input {
+  padding: 0 30px;
+  border: none;
+  background-color: #eee;
+  border-radius: 8px;
+  width: 400px;
+  height: 50px;
+}
+
+main h1 {
+  font-size: 32px;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+main form input[type="submit"] {
+  background-color: deepskyblue;
+  color: white;
+  line-height: 50px;
+  border-radius: 25px;
+  margin-top: 40px;
+}
+
+main form input[type="submit"]:hover {
+  background-color: rgb(92, 214, 255);
+}
+
+main form input[type="submit"]:active {
+  background-color: rgb(0, 165, 220);
+}
+
+main a {
+  display: block;
+  margin: 20px auto;
+  color: deepskyblue;
+}

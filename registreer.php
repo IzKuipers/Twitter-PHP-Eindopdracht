@@ -15,7 +15,7 @@ function registreerGebruiker()
   $wachtwoordOpnieuw = $_POST["wachtwoordOpnieuw"];
 
   if ($wachtwoord != $wachtwoordOpnieuw) {
-    foutmelding(4);
+    foutmelding(4, "/registreer.php");
 
     return;
   }
@@ -51,18 +51,21 @@ registreerGebruiker();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <title>Registreren - Twitter</title>
+  <link rel="stylesheet" href="/css/loginpage.css">
 </head>
 
 <body>
-  <h1>Registreren</h1>
-  <form action="" method="POST">
-    <input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam">
-    <input type="password" name="wachtwoord" placeholder="Wachtwoord">
-    <input type="password" name="wachtwoordOpnieuw" placeholder="Wachtwoord nogmaals">
-    <input type="submit" value="Registreren">
-  </form>
+  <main>
+    <h1>Registreren</h1>
+    <form action="" method="POST">
+      <input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam">
+      <input type="password" name="wachtwoord" placeholder="Wachtwoord">
+      <input type="password" name="wachtwoordOpnieuw" placeholder="Wachtwoord nogmaals">
+      <input type="submit" value="Registreren">
+    </form>
+    <a href="/login.php">Heb je al een account?</a>
+  </main>
 </body>
 
 </html>

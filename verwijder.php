@@ -8,6 +8,9 @@ session_start();
 verifieer_ingelogd();
 geef_foutmelding_weer();
 
+$gebruiker = gebruiker_uit_sessie();
+$gebruikerId = $gebruiker["id"];
+
 $connectie = verbind_mysqli();
 
 if (!isset($_GET["id"])) {
@@ -20,6 +23,17 @@ $id = $_GET["id"];
 
 try {
   global $id_statement;
+
+  $auteur_statement = $connectie->prepare("SELECT auteur FROM posts WHERE idPost = ?");
+  $auteur_statement->bind_param("i", $id);
+  $auteur_statement->execute();
+  $auteur_statement->bind_result($postAuteurId);
+  $auteur_statement->fetch();
+  $auteur_statement->close();
+
+  if ($gebruikerId !== $postAuteurId) {
+    return;
+  }
 
   $id_statement = $connectie->prepare("DELETE FROM posts WHERE idPost = ?");
   $id_statement->bind_param("i", $id);

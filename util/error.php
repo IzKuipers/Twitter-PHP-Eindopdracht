@@ -26,14 +26,21 @@ function geef_foutmelding_weer()
   $id = $_GET["error"];
   $continue = $_GET["continue"];
 
-  $connectie = verbind_mysqli();
+  $connectie = verbind_mysqli(false);
 
   $titel = "";
   $foutmelding = "";
   $details = (isset($_SESSION["error_message"]) ? $_SESSION["error_message"] : "(geen)");
 
+  unset($_SESSION["error_message"]);
+
   try {
     global $statement, $titel, $foutmelding;
+
+    if (!$connectie) {
+
+      throw new Exception("Connectie met server mislukt");
+    }
 
     $statement = $connectie->prepare("SELECT * FROM errors WHERE id = ?");
     $statement->bind_param("i", $id);
@@ -48,8 +55,8 @@ function geef_foutmelding_weer()
     }
 
   } catch (Exception $e) {
-    $titel = "Fout!";
-    $foutmelding = "Er is een fout met ID $id is opgetreden, maar het is niet gelukt om met de server te verbinden om de details van de foutmelding op te vragen. Onze excuses voor het ongemak.";
+    $titel = "Dubbele fout!";
+    $foutmelding = "Foutcode $id is opgetreden, maar het is niet gelukt om met de database te verbinden om de details van de foutmelding op te vragen. Onze excuses voor het ongemak.";
   } finally {
     sluit_mysqli($connectie, $statement);
   }

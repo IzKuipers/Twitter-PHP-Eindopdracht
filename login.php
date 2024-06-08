@@ -17,6 +17,11 @@ function gebruikerInloggen()
 
   $connectie = verbind_mysqli();
 
+  if (!$connectie) {
+    foutmelding(3, "/login.php");
+    return;
+  }
+
   $query = "SELECT idGebruiker,wachtwoord,status FROM gebruikers WHERE naam=?";
 
   try {
@@ -30,7 +35,7 @@ function gebruikerInloggen()
 
   } catch (Exception $e) {
     sluit_mysqli($connectie, $statement);
-    foutmelding(6, "", $e->getMessage());
+    foutmelding(6, "/login.php", $e->getMessage());
   } finally {
     sluit_mysqli($connectie, $statement);
   }
@@ -57,17 +62,20 @@ gebruikerInloggen();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <title>Inloggen - Twitter</title>
+  <link rel="stylesheet" href="/css/loginpage.css">
 </head>
 
 <body>
-  <form action="" method="POST">
-    <input type="text" placeholder="Gebruikersnaam" name="gebruikersnaam">
-    <input type="password" placeholder="Wachtwoord" name="wachtwoord">
-    <input type="submit" value="Inloggen">
-  </form>
-  <a href="/registreer.php">Geen account?</a>
+  <main>
+    <h1>Inloggen</h1>
+    <form action="" method="POST">
+      <input type="text" placeholder="Gebruikersnaam" name="gebruikersnaam" required>
+      <input type="password" placeholder="Wachtwoord" name="wachtwoord" required>
+      <input type="submit" value="Inloggen">
+    </form>
+    <a href="/registreer.php">Geen account?</a>
+  </main>
 </body>
 
 </html>

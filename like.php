@@ -10,6 +10,12 @@ geef_foutmelding_weer();
 
 $connectie = verbind_mysqli();
 
+if (!$connectie) {
+  foutmelding(7, "/", $e->getMessage());
+
+  die;
+}
+
 if (!isset($_GET["id"])) {
   header("location:/");
 

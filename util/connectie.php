@@ -1,6 +1,6 @@
 <?php
 
-function verbind_mysqli()
+function verbind_mysqli($geef_foutmelding = true)
 {
   $host = "127.0.0.1"; // Op Linux is het 127.0.0.1 in plaats van localhost!
   $user = "root";
@@ -16,11 +16,11 @@ function verbind_mysqli()
 
     return $connectie;
 
-    // We gaan ervanuit dat de verbind_mysqli() functie is gevolgd met een
-    // sluit_mysqli() referentie om een server fout te voorkomen.
+    // We gaan er vanuit dat de verbind_mysqli() functie is vervolgd met een
+    // sluit_mysqli() referentie om de connectie te sluiten.
   } catch (Exception $e) {
-    foutmelding(3);
-
+    if ($geef_foutmelding)
+      foutmelding(3, "/");
     return;
   }
 }

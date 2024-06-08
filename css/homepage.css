@@ -1,0 +1,15 @@
+@import url("./base.css");
+
+body {
+  overflow-y: scroll;
+}
+
+main {
+  margin: 0 auto;
+  width: fit-content;
+  max-width: 600px;
+  border: #ddd 1px solid;
+  margin-top: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+}

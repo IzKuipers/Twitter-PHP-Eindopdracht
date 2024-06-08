@@ -56,7 +56,10 @@ function post_ophalen($id)
 
 function post_lijst()
 {
+  session_start();
+
   $posts = krijg_posts();
+  $gebruiker = gebruiker_uit_sessie();
 
   echo "<div class='post-lijst'>";
 
@@ -72,10 +75,20 @@ function post_lijst()
   foreach ($posts as $post) {
     $body = $post['body'];
     $bodyVeilig = htmlspecialchars($body);
-    $gebruikersnaam = $post['auteur']['naam'];
     $id = $post['id'];
     $aantal_likes = $post["likes"];
     $timestamp = date("j M · G:i", strtotime($post["timestamp"]));
+
+    $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"];
+    $gebruikersnaam = $post['auteur']['naam'] . ($postVanGebruiker ? " (jij)" : "");
+
+    $verwijderKnop = $gebruiker["id"] == $post["auteur"]["idGebruiker"] ?
+      <<<HTML
+      <a href="/verwijder.php?id=$id" class="delete-button">
+        <span class='material-icons-round'>delete</span>
+        Verwijder
+      </a>
+      HTML : "";
 
     echo <<<HTML
       <div class='post'>
@@ -95,10 +108,7 @@ function post_lijst()
               <span class='material-icons-round'>favorite_outline</span>
               $aantal_likes
             </a>
-            <a href="/verwijder.php?id=$id" class="delete-button">
-              <span class='material-icons-round'>delete</span>
-              Verwijder
-            </a>
+            $verwijderKnop
             <div class="timestamp">
               $timestamp
             </div>
