@@ -41,11 +41,11 @@ CREATE TABLE `errors` (
 
 INSERT INTO `errors` (`id`, `titel`, `foutmelding`) VALUES
 (1, 'Gebruiker niet gevonden', 'De opgegeven gebruiker bestaat niet. Controleer de gegevens, en probeer het vervolgens opnieuw.'),
-(2, 'Wachtwoord onjuist', 'Het opgegeven wachtwoord is incorrect. Vul je gegevens opnieuw in, en probeer het vervolgens opnieuw.'),
+(2, 'Wachtwoord onjuist', 'Het opgegeven wachtwoord is incorrect. Vul het wachtwoord nogmaals in, en probeer het vervolgens opnieuw.'),
 (3, 'Verbinding mislukt', 'Het is niet gelukt om verbinding te maken met de database. Probeer het later opnieuw.'),
 (4, 'Wachtwoorden komen niet overeen', 'De opgegeven wachtwoorden komen niet overeen. Controleer de gegevens en probeer het opnieuw.'),
 (5, 'Gebruiker bestaat al', 'De gebruikersnaam die je probeerde te gebruiken bestaat al. Kies een andere gebruikersnaam en probeer het opnieuw.'),
-(6, 'Post versturen mislukt', 'Het is niet gelukt om jouw post te versturen. Probeer het later opnieuw.'),
+(6, 'Controle mislukt', 'Het is niet gelukt om te controleren of jouw account bestaat. Probeer het later opnieuw.'),
 (7, 'Kon de post niet liken.', 'Het is niet gelukt om de post te liken. Probeer het later opnieuw.'),
 (8, 'Versturen mislukt', 'Het is niet gelukt om jouw post te versturen. Probeer het later opnieuw.');
 

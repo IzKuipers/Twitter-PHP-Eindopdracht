@@ -27,7 +27,7 @@ try {
   $statement->bind_param("sii", $bericht, $likes, $gebruiker["id"]);
   $statement->execute();
 } catch (Exception $e) {
-  foutmelding(7, "/index.php", $e->getMessage());
+  foutmelding(8, "/index.php", $e->getMessage());
 } finally {
   sluit_mysqli($connectie, $statement);
 }

@@ -33,6 +33,23 @@ function gebruikerInloggen()
     $statement->bind_result($idGebruiker, $wachtwoordHash, $status);
     $statement->fetch();
 
+    if (!$idGebruiker) {
+      foutmelding(1, "/login.php", "idGebruiker was NULL");
+
+      return;
+    }
+
+    $wachtwoordKlopt = password_verify($wachtwoord, $wachtwoordHash);
+
+    if (!$wachtwoordKlopt) {
+      foutmelding(2, "/login.php", "Wachtwoord fout");
+
+      return;
+    }
+
+    $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
+
+    // header("location: /index.php");
   } catch (Exception $e) {
     sluit_mysqli($connectie, $statement);
     foutmelding(6, "/login.php", $e->getMessage());
@@ -40,17 +57,6 @@ function gebruikerInloggen()
     sluit_mysqli($connectie, $statement);
   }
 
-  $wachtwoordKlopt = password_verify($wachtwoord, $wachtwoordHash);
-
-  if (!$wachtwoordKlopt) {
-    foutmelding(2, "/login.php");
-
-    return;
-  }
-
-  $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
-
-  header("location: /index.php");
 }
 
 gebruikerInloggen();
