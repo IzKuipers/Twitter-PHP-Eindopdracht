@@ -55,3 +55,11 @@ div.error-wrapper div.error a:active {
 div.error-wrapper div.error p.details {
   opacity: 0.5;
 }
+
+@media screen and (max-width: 600px) {
+  div.error-wrapper div.error {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+  }
+}
