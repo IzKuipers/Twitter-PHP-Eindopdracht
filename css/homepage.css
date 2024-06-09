@@ -13,3 +13,9 @@ main {
   border-radius: 8px;
   overflow: hidden;
 }
+
+@media screen and (max-width: 600px) {
+  main {
+    margin-top: 0;
+  }
+}

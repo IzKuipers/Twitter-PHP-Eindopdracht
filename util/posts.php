@@ -10,20 +10,20 @@ function krijg_posts()
   $connectie = verbind_mysqli();
 
   try { // Probeer...
-    global $statement;
+    global $getStatement;
 
     // De vraag aan de database: Geef mij alle data van alle posts, met de nieuwste als eerste en de oudste als laatste (descending timestamp)
     $query = "SELECT * FROM posts ORDER BY timestamp DESC";
 
-    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
-    $statement->execute(); // Voer de vraag uit 
+    $getStatement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $getStatement->execute(); // Voer de vraag uit 
 
     $result = array();
 
     // Schrijf voor iedere post de data naar de respectieve variabelen. Deze data zal veranderen iedere keer dat de fetch() functie wordt uitgevoerd, vandaar de while loop die volgt.
-    $statement->bind_result($idPost, $auteur, $body, $likes, $timestamp);
+    $getStatement->bind_result($idPost, $auteur, $body, $likes, $timestamp);
 
-    while ($statement->fetch()) { // Ga over alle tweets in het resultaat
+    while ($getStatement->fetch()) { // Ga over alle tweets in het resultaat
       $gebruiker = gebruiker_ophalen($auteur); // Verkrijg de eigenschappen van de auteur
 
       // Voeg de tweet+auteur toe aan de lijst met posts
@@ -36,7 +36,7 @@ function krijg_posts()
     return array(); // Geef een lege array terug als "dummy"
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten
-    sluit_mysqli($connectie, $statement);
+    sluit_mysqli($connectie, $getStatement);
   }
 }
 

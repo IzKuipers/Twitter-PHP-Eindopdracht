@@ -40,7 +40,7 @@ function geef_foutmelding_weer()
   unset($_SESSION["error_message"]);
 
   try { // Probeer...
-    global $statement, $titel, $foutmelding; // Globalen voor het weergeven van de HTML en het sluiten van de statement
+    global $foutmeldingStatement, $titel, $foutmelding; // Globalen voor het weergeven van de HTML en het sluiten van de statement
 
     if (!$connectie) {
       // Connectie mislukt: gooi een foutmelding (handmatige implementatie van $geef_foutmelding == true in verbind_mysqli())
@@ -50,12 +50,12 @@ function geef_foutmelding_weer()
     // De vraag aan de database: Geef mij alle foutmeldingen wiens de ID (id = ?) gelijk staat aan ?
     $query = "SELECT * FROM errors WHERE id = ?";
 
-    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
-    $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-    $statement->execute(); // Voer de statement uit
+    $foutmeldingStatement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $foutmeldingStatement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
+    $foutmeldingStatement->execute(); // Voer de statement uit
 
-    $statement->bind_result($id, $titel, $foutmelding); // Schrijf het resultaat naar de respectieve variabelen. De volgorde is hetzelfde als in de tabel.
-    $statement->fetch(); // We hoeven fetch() maar eenmalig op te roepen omdat ID's toch uniek zijn, een while loop is hier overbodig.
+    $foutmeldingStatement->bind_result($id, $titel, $foutmelding); // Schrijf het resultaat naar de respectieve variabelen. De volgorde is hetzelfde als in de tabel.
+    $foutmeldingStatement->fetch(); // We hoeven fetch() maar eenmalig op te roepen omdat ID's toch uniek zijn, een while loop is hier overbodig.
 
     // De $titel variabele is NULL omdat de foutmelding niet bestaat
     if (!$titel) {
@@ -67,7 +67,7 @@ function geef_foutmelding_weer()
     $foutmelding = "Foutcode $id is opgetreden, maar het is niet gelukt om met de database te verbinden om de details van de foutmelding op te vragen. Onze excuses voor het ongemak.";
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten via sluit_mysqli()
-    sluit_mysqli($connectie, $statement);
+    sluit_mysqli($connectie, $foutmeldingStatement);
   }
 
   // Geef de uiteindelijke HTML weer van de foutmelding. Opmerkelijk hier is de CSS import. Deze import zorgt ervoor dat:

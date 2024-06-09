@@ -21,19 +21,19 @@ $likes = 0; // De likes van de post (standaard 0)
 $connectie = verbind_mysqli();
 
 try { // Probeer...
-  global $statement; // Maak de statement globaal om deze later te kunnen sluiten
+  global $postInsertStatement; // Maak de statement globaal om deze later te kunnen sluiten
 
   // De vraag aan de database: Maak een rij aan in de posts tabel met body ?, likes ? en auteur-id ?
   $query = "INSERT INTO posts(body,likes,auteur) VALUES (?,?,?)";
 
-  $statement = $connectie->prepare($query); // Bereid de vraag voor
-  $statement->bind_param("sii", $bericht, $likes, $gebruiker["id"]); // Vervang de variabelen met hun specifieke waarden
-  $statement->execute(); // Voer de vraag uit
+  $postInsertStatement = $connectie->prepare($query); // Bereid de vraag voor
+  $postInsertStatement->bind_param("sii", $bericht, $likes, $gebruiker["id"]); // Vervang de variabelen met hun specifieke waarden
+  $postInsertStatement->execute(); // Voer de vraag uit
 } catch (Exception $e) { // Anders...
   foutmelding(8, "/index.php", $e->getMessage()); // Posten mislukt: geef een foutmelding weer
 } finally { // Ten slotte...
   // Probeer de connectie en statement te sluiten
-  sluit_mysqli($connectie, $statement);
+  sluit_mysqli($connectie, $postInsertStatement);
 }
 
 // Stuur de gebruiker terug naar de index pagina

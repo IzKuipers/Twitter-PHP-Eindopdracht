@@ -39,3 +39,10 @@ form.post-form input[type="submit"]:hover {
 form.post-form input[type="submit"]:active {
   background-color: rgb(0, 165, 220);
 }
+
+@media screen and (max-width: 600px) {
+  form.post-form {
+    max-width: unset;
+    width: 100%;
+  }
+}

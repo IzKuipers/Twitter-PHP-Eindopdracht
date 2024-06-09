@@ -30,20 +30,20 @@ function registreerGebruiker()
   $connectie = verbind_mysqli();
 
   try { // Probeer...
-    global $statement; // Maak de statement globaal om deze later te kunnen sluiten
+    global $gebruikerInsertStatement; // Maak de statement globaal om deze later te kunnen sluiten
 
     // De vraag aan de database: Maak een rij aan in de gebruikers tabel met gebruikersnaam ? en wachtwoord-hash ?
     $query = "INSERT INTO gebruikers(naam,wachtwoord) values (?,?)";
 
-    $statement = $connectie->prepare($query); // Bereid de vraag voor
-    $statement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
-    $statement->execute(); // Voer de vraag uit
+    $gebruikerInsertStatement = $connectie->prepare($query); // Bereid de vraag voor
+    $gebruikerInsertStatement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
+    $gebruikerInsertStatement->execute(); // Voer de vraag uit
   } catch (Exception $e) { // Anders...
     foutmelding(5, "/registreer.php", $e->getMessage()); // Geef een foutmelding weer als het niet is gelukt om de gebruiker aan te maken
 
     return;
   } finally { // Ten slotte...
-    sluit_mysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
+    sluit_mysqli($connectie, $gebruikerInsertStatement); // Probeer de connectie en statement te sluiten
   }
 
   header("location: /login.php"); // Stuur de gebruiker naar de inlog pagina

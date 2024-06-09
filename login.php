@@ -27,16 +27,16 @@ function gebruikerInloggen()
 
 
   try { // Probeer...
-    global $statement; // Maak de statement globaal om deze later te kunnen sluiten
+    global $loginSelectStatement; // Maak de statement globaal om deze later te kunnen sluiten
 
     // De vraag aan de database: Geef mij de ID, de wachtwoord-hash en de status van alle gebruikers wiens naam gelijk staat aan ?
     $query = "SELECT idGebruiker,wachtwoord,status FROM gebruikers WHERE naam=?";
 
-    $statement = $connectie->prepare($query); // Bereid de vraag voor
-    $statement->bind_param("s", $gebruikersnaam); // Vervang het vraagteken met de daadwerkelijke gebruikersnaam
-    $statement->execute(); // Voer de vraag uit
-    $statement->bind_result($idGebruiker, $wachtwoordHash, $status); // Schrijf het resultaat naar de respectieve variabelen
-    $statement->fetch(); // Vraag het resultaat op. Dit hoeft maar eenmalig te gebeuren omdat ID's uniek zijn
+    $loginSelectStatement = $connectie->prepare($query); // Bereid de vraag voor
+    $loginSelectStatement->bind_param("s", $gebruikersnaam); // Vervang het vraagteken met de daadwerkelijke gebruikersnaam
+    $loginSelectStatement->execute(); // Voer de vraag uit
+    $loginSelectStatement->bind_result($idGebruiker, $wachtwoordHash, $status); // Schrijf het resultaat naar de respectieve variabelen
+    $loginSelectStatement->fetch(); // Vraag het resultaat op. Dit hoeft maar eenmalig te gebeuren omdat ID's uniek zijn
 
     // Controleer of de gebruiker bestaat
     if (!$idGebruiker) {
@@ -62,7 +62,7 @@ function gebruikerInloggen()
   } catch (Exception $e) {
     foutmelding(6, "/login.php", $e->getMessage()); // Geef een foutmelding weer
   } finally {
-    sluit_mysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
+    sluit_mysqli($connectie, $loginSelectStatement); // Probeer de connectie en statement te sluiten
   }
 }
 
