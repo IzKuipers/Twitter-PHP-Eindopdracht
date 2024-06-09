@@ -60,3 +60,16 @@ main a {
   margin: 20px auto;
   color: deepskyblue;
 }
+
+@media screen and (max-width: 450px) {
+  main {
+    border-radius: 0;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  main form input {
+    width: 100%;
+  }
+}

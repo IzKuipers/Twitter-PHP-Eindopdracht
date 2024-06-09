@@ -76,7 +76,7 @@ function post_lijst()
       <<<HTML
       <a href="/verwijder.php?id=$id" class="delete-button">
         <span class='material-icons-round'>delete</span>
-        Verwijder
+        <span>Verwijder</span>
       </a>
       HTML : "";
 

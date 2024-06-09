@@ -17,5 +17,8 @@ main {
 @media screen and (max-width: 600px) {
   main {
     margin-top: 0;
+    width: 100%;
+    border-left: none;
+    border-right: none;
   }
 }

@@ -90,3 +90,9 @@ div.post-lijst p.geen span.material-icons-round {
 div.post-lijst p.geen span.bericht {
   opacity: 0.5;
 }
+
+@media screen and (max-width: 500px) {
+  div.post-lijst div.actions a.delete-button span:not(.material-icons-round) {
+    display: none;
+  }
+}
