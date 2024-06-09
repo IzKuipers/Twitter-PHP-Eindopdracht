@@ -2,67 +2,55 @@
 
 require_once ("gebruiker.php");
 
+// Deze functie geeft een lijst terug met alle posts. Het voegt ook de eigenschappen van
+// iedere auteur toe aan iedere tweet om het makkelijker te maken voor de HTML implementatie
 function krijg_posts()
 {
+  // Maak verbinding met de database dmv verbind_mysqli()
   $connectie = verbind_mysqli();
 
-  // try {
-  // global $statement;
+  try { // Probeer...
+    global $statement;
 
-  $query = "SELECT * FROM posts ORDER BY timestamp DESC";
-  $statement = $connectie->prepare($query);
-  $statement->execute();
+    // De vraag aan de database: Geef mij alle data van alle posts, met de nieuwste als eerste en de oudste als laatste (descending timestamp)
+    $query = "SELECT * FROM posts ORDER BY timestamp DESC";
 
-  $result = array();
+    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $statement->execute(); // Voer de vraag uit 
 
-  $statement->bind_result($idPost, $auteur, $body, $likes, $timestamp);
+    $result = array();
 
-  while ($statement->fetch()) {
-    $gebruiker = gebruiker_ophalen($auteur);
-
-    $result[] = array("id" => $idPost, "auteur" => $gebruiker, "body" => $body, "likes" => $likes, "timestamp" => $timestamp);
-  }
-  sluit_mysqli($connectie);
-
-  return $result;
-  // } catch (Exception $e) {
-  //   return array();
-  // } finally {
-  // }
-}
-
-function post_ophalen($id)
-{
-  $connectie = verbind_mysqli();
-  $query = "SELECT * FROM posts ORDER BY timestamp DESC WHERE id=?";
-
-  try {
-
-    $statement = $connectie->prepare($query);
-    $statement->bind_param("i", $id);
-    $statement->execute();
-    $statement->fetch();
+    // Schrijf voor iedere post de data naar de respectieve variabelen. Deze data zal veranderen iedere keer dat de fetch() functie wordt uitgevoerd, vandaar de while loop die volgt.
     $statement->bind_result($idPost, $auteur, $body, $likes, $timestamp);
 
-    $gebruiker = gebruiker_ophalen($auteur);
+    while ($statement->fetch()) { // Ga over alle tweets in het resultaat
+      $gebruiker = gebruiker_ophalen($auteur); // Verkrijg de eigenschappen van de auteur
 
-    return array("id" => $idPost, "auteur" => $gebruiker, "body" => $body, "likes" => $likes, "timestamp" => $timestamp);
-  } catch (Exception $e) {
-    return array("id" => -1, "auteur" => "", "body" => "", "likes" => -1, "timestamp" => -1);
-  } finally {
+      // Voeg de tweet+auteur toe aan de lijst met posts
+      $result[] = array("id" => $idPost, "auteur" => $gebruiker, "body" => $body, "likes" => $likes, "timestamp" => $timestamp);
+    }
+
+    // Geef de array met alle "expanded" (als in iedere post + de auteur eigenschappen) terug
+    return $result;
+  } catch (Exception $e) { // Anders...
+    return array(); // Geef een lege array terug als "dummy"
+  } finally { // En ten slotte...
+    // Probeer de connectie en statement te sluiten
     sluit_mysqli($connectie, $statement);
   }
 }
 
+// Deze functie geeft de daadwerkelijke posts weer in de HTML
 function post_lijst()
 {
-  session_start();
+  session_start(); // Start de sessie voor de ingelogde gebruiker's eigenschappen
 
-  $posts = krijg_posts();
-  $gebruiker = gebruiker_uit_sessie();
+  $posts = krijg_posts(); // Verkrijg alle posts met de nieuwste als eerste, en de oudste als laatste.
+  $gebruiker = gebruiker_uit_sessie(); // Verkrijg de gebruiker uit de informatie die bij het inloggen is opgeslagen in de session
 
-  echo "<div class='post-lijst'>";
+  echo "<div class='post-lijst'>"; // Open een DIV element met de class 'post-lijst'
 
+  // Geef een melding weer als er geen tweets zijn.
   if (count($posts) == 0) {
     echo <<<HTML
       <p class="geen">
@@ -72,17 +60,19 @@ function post_lijst()
     HTML;
   }
 
+  // Voor iedere tweet in de array $posts, doe...
   foreach ($posts as $post) {
-    $body = $post['body'];
-    $bodyVeilig = htmlspecialchars($body);
-    $id = $post['id'];
-    $aantal_likes = $post["likes"];
-    $timestamp = date("j M · G:i", strtotime($post["timestamp"]));
+    $body = $post['body']; // De content van de tweet
+    $bodyVeilig = htmlspecialchars($body); // De content van de tweet, beveiligd tegen XSS
+    $id = $post['id']; // De ID van de tweet
+    $aantal_likes = $post["likes"]; // De likes van de tweet
+    $timestamp = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
 
-    $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"];
-    $gebruikersnaam = $post['auteur']['naam'] . ($postVanGebruiker ? " (jij)" : "");
+    $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"]; // Een boolean die aangeeft of de post van de ingelogde gebruiker is
+    $gebruikersnaam = $post['auteur']['naam'] . ($postVanGebruiker ? " (jij)" : ""); // De gebruikersnaam die boven de post wordt weergegeven
 
-    $verwijderKnop = $gebruiker["id"] == $post["auteur"]["idGebruiker"] ?
+    // Een verwijder-knop die alleen wordt weergegeven als de post van de ingelogde gebruiker is. Die conditie wordt ook gecontroleerd in /verwijder.php
+    $verwijderKnop = $postVanGebruiker ?
       <<<HTML
       <a href="/verwijder.php?id=$id" class="delete-button">
         <span class='material-icons-round'>delete</span>
@@ -91,24 +81,33 @@ function post_lijst()
       HTML : "";
 
     echo <<<HTML
+      <!-- De div van dep post -->
       <div class='post'>
+        <!-- De linker kant: hier wordt de profielfoto weergegeven (een standaard foto in dit project) -->
         <div class="left">
           <img src="/images/pfp.png" alt="">
         </div>
+        <!-- De rechter kant: hier wordt de content van de tweet weergegeven -->
         <div class="right">
+          <!-- Boven de content: De auteur's naam + de ID van de post -->
           <div class="auteur">
             <span class="naam">$gebruikersnaam</span>
             <span class="id">· Post #$id</span>
           </div>  
+          <!-- De content van de post, beschermd tegen XSS  -->
           <div class="body">
             $bodyVeilig
           </div>
+          <!-- Boven de content: De auteur's naam + de ID van de post -->
           <div class="actions">
+            <!-- De knop om een post te "liken" -->
             <a href="/like.php?id=$id" class="like-button">
               <span class='material-icons-round'>favorite_outline</span>
               $aantal_likes
             </a>
+            <!-- De verwijder knop. Deze variabele is een lege string ("") als de post niet van de ingelogde gebruiker is -->
             $verwijderKnop
+            <!-- De geformatteerde datum en tijd van de post -->
             <div class="timestamp">
               $timestamp
             </div>

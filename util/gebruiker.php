@@ -1,24 +1,30 @@
 <?php
 
+// Deze functie is een middleman om gemakkelijk met een ID een gebruiker op te halen.
 function gebruiker_ophalen($id)
 {
+  // Maak verbinding met de database dmv verbind_mysqli()
   $connectie = verbind_mysqli();
 
-  $query = "SELECT idGebruiker,naam,status FROM gebruikers WHERE idGebruiker = ?";
+  try { // Probeer...
+    global $statement; // Maak de statement global voor het sluiten.
 
-  try {
-    global $statement;
+    // De vraag aan de database: Geef mij de ID, naam en status van alle gebruikers wiens ID gelijk staat aan ?
+    $query = "SELECT idGebruiker,naam,status FROM gebruikers WHERE idGebruiker = ?";
 
-    $statement = $connectie->prepare($query);
-    $statement->bind_param("i", $id);
-    $statement->execute();
-    $statement->bind_result($idGebruiker, $naam, $status);
-    $statement->fetch();
+    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
+    $statement->execute(); // Voer de vraag uit
+    $statement->bind_result($idGebruiker, $naam, $status); // Schrijf het resultaat naar de respectieve variabelen. De volgorde is hetzelfde als in de tabel.
+    $statement->fetch(); // We hoeven fetch() maar eenmalig op te roepen omdat ID's toch uniek zijn, een while loop is hier overbodig.
 
+    // Geef een associative array terug met de eigenschappen van de gebruiker
     return array("idGebruiker" => $idGebruiker, "naam" => $naam, "status" => $status);
-  } catch (Exception $e) {
+  } catch (Exception $e) { // Anders...
+    // Geef een associative array terug met "dummy informatie"
     return array("idGebruiker" => -1, "naam" => "", "status" => "");
-  } finally {
+  } finally { // En ten slotte...
+    // Probeer de connectie en statement te sluiten
     sluit_mysqli($connectie, $statement);
   }
 }

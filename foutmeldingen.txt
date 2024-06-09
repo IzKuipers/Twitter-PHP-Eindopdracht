@@ -1,3 +1,12 @@
+# INFORMATIE #
+Dit bestand heb ik gebruikt als referentie voor de foutmeldingen die ik handmatig aan de database heb toegevoegd. De berichten die hierin staan zijn mogelijk
+niet langer accuraat en is in geen enkel opzicht gerelateerd aan de informatie die in de "errors" table staat. Kijk alstublieft naar de "errors" table waarden
+door importeer-mij.sql te importeren of te openen in een text editor.
+
+- Izaak Kuipers, June 9th 2024 @ 2:11PM
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 1: De gebruiker bestaat niet
 2: Het wachtwoord is onjuist
 3: De verbinding met de server is mislukt
