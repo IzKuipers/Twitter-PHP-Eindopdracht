@@ -3,63 +3,70 @@
 require_once ("./util/error.php");
 require_once ("./util/session.php");
 
-session_start();
-geef_foutmelding_weer();
+session_start(); // Start de sessie
+geef_foutmelding_weer(); // Geef de eventuele foutmelding weer
 
+// Deze functie wordt gebruikt om de gebruiker in te loggen via de POST data
 function gebruikerInloggen()
 {
+  // Check via de request method en POST data of de gebruiker probeert in te loggen
   if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST["gebruikersnaam"], $_POST["wachtwoord"])) {
-    return;
+    return; // Gebruiker probeert niet in te loggen, stop.
   }
 
-  $gebruikersnaam = $_POST["gebruikersnaam"];
-  $wachtwoord = $_POST["wachtwoord"];
+  $gebruikersnaam = $_POST["gebruikersnaam"]; // De gebruikersnaam die de gebruiker heeft ingevoerd
+  $wachtwoord = $_POST["wachtwoord"]; // Het wachtwoord die de gebruiker heeft ingevoerd
 
+  // Maak verbinding met de database
   $connectie = verbind_mysqli();
 
   if (!$connectie) {
-    foutmelding(3, "/login.php");
+    we_zijn_offline(); // Connectie mislukt, naar de offline pagina dan maar!
     return;
   }
 
-  $query = "SELECT idGebruiker,wachtwoord,status FROM gebruikers WHERE naam=?";
 
-  try {
-    global $idGebruiker, $passwordHash, $status, $statement;
+  try { // Probeer...
+    global $statement; // Maak de statement globaal om deze later te kunnen sluiten
 
-    $statement = $connectie->prepare($query);
-    $statement->bind_param("s", $gebruikersnaam);
-    $statement->execute();
-    $statement->bind_result($idGebruiker, $wachtwoordHash, $status);
-    $statement->fetch();
+    // De vraag aan de database: Geef mij de ID, de wachtwoord-hash en de status van alle gebruikers wiens naam gelijk staat aan ?
+    $query = "SELECT idGebruiker,wachtwoord,status FROM gebruikers WHERE naam=?";
 
+    $statement = $connectie->prepare($query); // Bereid de vraag voor
+    $statement->bind_param("s", $gebruikersnaam); // Vervang het vraagteken met de daadwerkelijke gebruikersnaam
+    $statement->execute(); // Voer de vraag uit
+    $statement->bind_result($idGebruiker, $wachtwoordHash, $status); // Schrijf het resultaat naar de respectieve variabelen
+    $statement->fetch(); // Vraag het resultaat op. Dit hoeft maar eenmalig te gebeuren omdat ID's uniek zijn
+
+    // Controleer of de gebruiker bestaat
     if (!$idGebruiker) {
-      foutmelding(1, "/login.php", "idGebruiker was NULL");
+      foutmelding(1, "/login.php", "idGebruiker was NULL"); // Gebruiker bestaat niet, geef een foutmelding weer
 
       return;
     }
 
+    // Controleer of het wachtwoord klopt met de builtin hashing-functie password_verify()
     $wachtwoordKlopt = password_verify($wachtwoord, $wachtwoordHash);
 
     if (!$wachtwoordKlopt) {
-      foutmelding(2, "/login.php", "Wachtwoord fout");
+      foutmelding(2, "/login.php", "Wachtwoord fout"); // Het wachtwoord klopt niet, geef een foutmelding weer
 
       return;
     }
 
+    // Schrijf de eigenschappen van de gebruiker naar de session om later te gebruiken
     $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
 
-    // header("location: /index.php");
+    // Stuur de gebruiker naar de homepagina
+    header("location: /index.php");
   } catch (Exception $e) {
-    sluit_mysqli($connectie, $statement);
-    foutmelding(6, "/login.php", $e->getMessage());
+    foutmelding(6, "/login.php", $e->getMessage()); // Geef een foutmelding weer
   } finally {
-    sluit_mysqli($connectie, $statement);
+    sluit_mysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
   }
-
 }
 
-gebruikerInloggen();
+gebruikerInloggen(); // Probeer de gebruiker in te loggen
 ?>
 
 <!DOCTYPE html>
@@ -73,13 +80,23 @@ gebruikerInloggen();
 </head>
 
 <body>
+  <!-- Main: een gecentreerde div met daarin de content van de pagina -->
   <main>
+    <!-- De header van het inlog-formulier -->
     <h1>Inloggen</h1>
+
+    <!-- Het inlog-formulier, wordt terug gestuurd naar dezelfde pagina met POST data om te gebruiken voor het inlog-proces -->
     <form action="" method="POST">
+      <!-- Het gebruikersnaam-veld: Komt in de POST data als "gebruikersnaam" en is een verplicht veld. -->
       <input type="text" placeholder="Gebruikersnaam" name="gebruikersnaam" required>
+      <!-- Het wachtwoord-veld: Komt in de POST data als "wachtwoord" en is een verplicht veld. -->
       <input type="password" placeholder="Wachtwoord" name="wachtwoord" required>
+
+      <!-- De knop om door te gaan naar het inlog-proces -->
       <input type="submit" value="Inloggen">
     </form>
+
+    <!-- Een handy-dandy link naar de registreer-pagina -->
     <a href="/registreer.php">Geen account?</a>
   </main>
 </body>

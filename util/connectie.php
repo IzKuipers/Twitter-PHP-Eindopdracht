@@ -12,7 +12,7 @@ function verbind_mysqli($geef_foutmelding = true)
   $pass = ""; // Het wachtwoord van de database gebruiker
   $database = "eindopdracht"; // De SQL database om mee te verbinden (zie importeer-mij.sql voor de database import)
 
-  try {
+  try { // Probeer...
     // Maak een nieuwe MySQLi class instantie aan om met de database te communiceren
     $connectie = new mysqli($host, $user, $pass, $database);
 
@@ -25,11 +25,11 @@ function verbind_mysqli($geef_foutmelding = true)
 
     // We gaan er vanuit dat de verbind_mysqli() functie is vervolgd met een
     // sluit_mysqli() referentie om de connectie te sluiten.
-  } catch (Exception $e) {
+  } catch (Exception $e) { // Anders...
     // Dit is conditioneel: Er zijn instanties waar een visuele foutmelding niet van toepassing is
     // en op een andere manier wordt afgehandeld. Vandaar de $geef_foutmelding.
     if ($geef_foutmelding)
-      foutmelding(3, "/"); // Geef foutmelding 3 weer aan de gebruiker
+      we_zijn_offline(); // Connectie mislukt, naar de offline pagina dan maar!
   }
 }
 

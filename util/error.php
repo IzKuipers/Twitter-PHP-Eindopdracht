@@ -1,11 +1,10 @@
 <?php
 require_once ("connectie.php");
 
-session_start();
+session_start(); // Start de sessie als het bestand wordt geïmporteerd
 
 function foutmelding(int $id, string $continue = "", string $message = "")
 {
-
   $aanvraagUri = $_SERVER["REQUEST_URI"]; // Dit is de Uniform Resource Identifier, in feiten gewoon de URL van de pagina, inclusief de GET parameters en Hash
   $huidigeUrl = parse_url($aanvraagUri); // Verkrijg de individuele onderdelen van de URI in vorm van een associative array (URL pad als "path" en de GET parameters als "query")
   $paginaPad = $huidigeUrl['path']; // Het pad van de huidige PHP pagina
@@ -41,7 +40,7 @@ function geef_foutmelding_weer()
   unset($_SESSION["error_message"]);
 
   try { // Probeer...
-    global $statement, $titel, $foutmelding; // Globals voor het weergeven van de HTML en het sluiten van de statement
+    global $statement, $titel, $foutmelding; // Globalen voor het weergeven van de HTML en het sluiten van de statement
 
     if (!$connectie) {
       // Connectie mislukt: gooi een foutmelding (handmatige implementatie van $geef_foutmelding == true in verbind_mysqli())
@@ -89,4 +88,10 @@ function geef_foutmelding_weer()
       </div>
     </div>
   HTML;
+}
+
+// Deze functie wordt aangeroepen als de database verbinding mislukt
+function we_zijn_offline()
+{
+  header("location:/offline.php"); // Stuur de gebruiker naar de offline-pagina
 }
