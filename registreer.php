@@ -71,11 +71,11 @@ registreerGebruiker(); // Probeer de gebruieker te registeren
     <!-- Het registreer-formulier, wordt terug gestuurd naar dezelfde pagina met POST data om te gebruiken voor het registreer-proces -->
     <form action="" method="POST">
       <!-- Het gebruikersnaam veld: Komt in de POST data als "gebruikersnaam" en is een verplicht veld. -->
-      <input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam">
+      <input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam" required>
       <!-- Het wachtwoord veld: Komt in de POST data als "wachtwoord" en is een verplicht veld. -->
-      <input type="password" name="wachtwoord" placeholder="Wachtwoord">
+      <input type="password" name="wachtwoord" placeholder="Wachtwoord" required>
       <!-- Het wachtwoord-opnieuw veld: Komt in de POST data als "wachtwoordOpnieuw" en is een verplicht veld. -->
-      <input type="password" name="wachtwoordOpnieuw" placeholder="Wachtwoord nogmaals">
+      <input type="password" name="wachtwoordOpnieuw" placeholder="Wachtwoord nogmaals" required>
 
       <!-- De knop om door te gaan naar het registreer-proces -->
       <input type="submit" value="Registreren">
