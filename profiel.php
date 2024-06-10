@@ -29,6 +29,7 @@ if (!$auteur["naam"]) {
 
 // De status van de auteur
 $status = $auteur["status"];
+$likes = totaleLikes($posts);
               
 ?>
 
@@ -81,7 +82,7 @@ $status = $auteur["status"];
       <div class="top"></div>
       <div class="bottom">
         <!-- De ID van de gebruiker -->
-        <span class="id">#<?= $id ?></span>
+        <span class="id"><?=$likes?> Likes · Profiel #<?= $id ?></span>
         <!-- Een standaard profielfoto -->
         <img src="/images/pfp.png" class="pfp">
         <!-- De naam van de auteur -->

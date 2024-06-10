@@ -155,3 +155,14 @@ function postLijst($posts)
 
   echo "</div>";
 }
+
+function totaleLikes($posts)
+{
+  $likes = 0;
+
+  foreach ($posts as $post) {
+    $likes += $post["likes"];
+  }
+
+  return $likes;
+}
