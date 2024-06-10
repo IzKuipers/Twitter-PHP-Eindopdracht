@@ -15,6 +15,7 @@ if (!isset($_POST["bericht"])) {
 $gebruiker = gebruikerUitSessie(); // Haal de gebruiker op uit de sessie
 
 $bericht = $_POST["bericht"]; // Het bericht van de gebruiker
+$reageertOp = isset($_POST["reactieOp"]) ? $_POST["reactieOp"] : NULL;
 $likes = 0; // De likes van de post (standaard 0)
 
 // Maak verbinding met de database
@@ -23,11 +24,11 @@ $connectie = verbindMysqli();
 try { // Probeer...
   global $postInsertStatement; // Maak de statement globaal om deze later te kunnen sluiten
 
-  // De vraag aan de database: Maak een rij aan in de posts tabel met body ?, likes ? en auteur-id ?
-  $query = "INSERT INTO posts(body,likes,auteur) VALUES (?,?,?)";
+  // De vraag aan de database: Maak een rij aan in de posts tabel met body ?, likes ?, auteur-id ? en reageert-op ?
+  $query = "INSERT INTO posts(body,likes,auteur,repliesTo) VALUES (?,?,?,?)";
 
   $postInsertStatement = $connectie->prepare($query); // Bereid de vraag voor
-  $postInsertStatement->bind_param("sii", $bericht, $likes, $gebruiker["id"]); // Vervang de variabelen met hun specifieke waarden
+  $postInsertStatement->bind_param("siii", $bericht, $likes, $gebruiker["id"], $reageertOp); // Vervang de variabelen met hun specifieke waarden
   $postInsertStatement->execute(); // Voer de vraag uit
 } catch (Exception $e) { // Anders...
   foutmelding(Foutmeldingen::VersturenMislukt, "/index.php", $e->getMessage()); // Posten mislukt: geef een foutmelding weer
