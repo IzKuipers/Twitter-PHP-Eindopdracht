@@ -6,6 +6,7 @@ $connectie = verbindMysqli(false);
 
 // Controleer of we daadwerkelijk offline zijn
 if ($connectie) {
+  sluitMysqli($connectie);
   header("location:/"); // We zijn online: ga terug naar de home pagina
 }
 ?>
