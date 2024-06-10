@@ -3,6 +3,7 @@
 function HeaderBar($gebruiker)
 {
   $naam = $gebruiker["naam"];
+  $id = $gebruiker["id"];
 
   echo <<<HTML
   <link rel="stylesheet" href="/css/header.css">
@@ -16,12 +17,11 @@ function HeaderBar($gebruiker)
     <div class="right">
       <div class="user">
         <!-- Het ?= teken is een kortere versie van ? echo -->
-        <p class="username">$naam</p>
+        <p class="username"><a href="/profiel.php?id=$id">$naam</a></p>
         <!-- We gebruiken /uitloggen.php voor het uitloggen-proces -->
         <a href="/uitloggen.php" class="material-icons-round">logout</a>
       </div>
     </div>
   </header>
-  
   HTML;
 }

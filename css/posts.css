@@ -101,6 +101,6 @@ div.post-lijst p.geen span.bericht {
   }
 
   div.post-lijst div.post {
-    max-width: unset;
+    max-width: 100vw;
   }
 }
