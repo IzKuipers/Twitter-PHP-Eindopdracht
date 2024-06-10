@@ -299,12 +299,13 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
 function reactieFormulier($post)
 {
   $id = $post["id"]; // De ID van de post
+  $auteurnaam = $post["auteur"]["naam"];
 
   return <<<HTML
     <!-- Dit is een POST form die wordt verstuurd naar /stuurpost.php, met een hidden value die de reactie-id bevat -->
     <form class="reactie-form" method="POST" action="/stuurpost.php" id="reactieForm_$id">
       <input type="hidden" name="reactieOp" value="$id">
-      <input type="text" placeholder="Wat heb je te zeggen?" name="bericht" required maxlength="256" rows="2"></textarea>
+      <input type="text" placeholder="Wat heb je te zeggen?" name="bericht" value="@$auteurnaam " required maxlength="256" rows="2"></textarea>
       <!-- De knop om de post te versturen -->
       <input type="submit" value="Reageer">
     </form>
