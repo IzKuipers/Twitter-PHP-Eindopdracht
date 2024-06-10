@@ -13,7 +13,7 @@ geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 $connectie = verbindMysqli();
 
 if (!$connectie) { // Connectie mislukt, geef een foutmelding en stop.
-  foutmelding(7, "/", $e->getMessage());
+  foutmelding(Foutmeldingen::VerbindingMislukt, "/", $e->getMessage());
 
   die;
 }
@@ -50,7 +50,7 @@ try { // Probeer...
   $updateStatement->bind_param("ii", $likes, $id); // Vervang het vraagteken met de daadwerkelijke ID
   $updateStatement->execute(); // Voer de tweede vraag uit
 } catch (Exception $e) { // Anders...
-  foutmelding(7, "/", $e->getMessage());
+  foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage());
 } finally { // Ten slotte...
   sluitMysqli($connectie, $updateStatement); // Probeer de connectie en tweede statement te sluiten
   echo "<script>history.back();</script>"; // Echo een Javascript uitvoering om terug te gaan naar de vorige pagina

@@ -18,7 +18,7 @@ function registreerGebruiker()
 
   // Check of de twee wachtwoorden hetzelfde zijn
   if ($wachtwoord != $wachtwoordOpnieuw) {
-    foutmelding(4, "/registreer.php"); // Wachtwoorden niet hetzelfde, geef een foutmelding weer.
+    foutmelding(Foutmeldingen::WachtwoordenMismatch, "/registreer.php"); // Wachtwoorden niet hetzelfde, geef een foutmelding weer.
 
     return;
   }
@@ -39,7 +39,7 @@ function registreerGebruiker()
     $gebruikerInsertStatement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
     $gebruikerInsertStatement->execute(); // Voer de vraag uit
   } catch (Exception $e) { // Anders...
-    foutmelding(5, "/registreer.php", $e->getMessage()); // Geef een foutmelding weer als het niet is gelukt om de gebruiker aan te maken
+    foutmelding(Foutmeldingen::GebruikerBestaatAl, "/registreer.php", $e->getMessage()); // Geef een foutmelding weer als het niet is gelukt om de gebruiker aan te maken
 
     return;
   } finally { // Ten slotte...

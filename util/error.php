@@ -3,7 +3,7 @@ require_once ("connectie.php");
 
 session_start(); // Start de sessie als het bestand wordt geïmporteerd
 
-function foutmelding(int $id, string $continue = "", string $message = "")
+function foutmelding(Foutmeldingen $id, string $continue = "", string $message = "")
 {
   $aanvraagUri = $_SERVER["REQUEST_URI"]; // Dit is de Uniform Resource Identifier, in feiten gewoon de URL van de pagina, inclusief de GET parameters en Hash
   $huidigeUrl = parse_url($aanvraagUri); // Verkrijg de individuele onderdelen van de URI in vorm van een associative array (URL pad als "path" en de GET parameters als "query")
@@ -94,4 +94,18 @@ function geefFoutmeldingWeer()
 function weZijnOffline()
 {
   header("location:/offline.php"); // Stuur de gebruiker naar de offline-pagina
+}
+
+// Ik gebruik een enumeration om de foutcodes op een centrale
+// manier te noteren om ze gemakkelijk te kunnen veranderen
+enum Foutmeldingen
+{
+  case GebruikerNietGevonden = 1;
+  case WachtwoordOnjuist = 2;
+  case VerbindingMislukt = 3;
+  case WachtwoordenMismatch = 4;
+  case GebruikerBestaatAl = 5;
+  case ControleMislukt = 6;
+  case PostLikeMislukt = 7;
+  case VersturenMislukt = 8;
 }

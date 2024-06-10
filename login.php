@@ -40,7 +40,7 @@ function gebruikerInloggen()
 
     // Controleer of de gebruiker bestaat
     if (!$idGebruiker) {
-      foutmelding(1, "/login.php", "idGebruiker was NULL"); // Gebruiker bestaat niet, geef een foutmelding weer
+      foutmelding(Foutmeldingen::GebruikerNietGevonden, "/login.php", "idGebruiker was NULL"); // Gebruiker bestaat niet, geef een foutmelding weer
 
       return;
     }
@@ -49,7 +49,7 @@ function gebruikerInloggen()
     $wachtwoordKlopt = password_verify($wachtwoord, $wachtwoordHash);
 
     if (!$wachtwoordKlopt) {
-      foutmelding(2, "/login.php", "Wachtwoord fout"); // Het wachtwoord klopt niet, geef een foutmelding weer
+      foutmelding(Foutmeldingen::WachtwoordOnjuist, "/login.php", "Wachtwoord fout"); // Het wachtwoord klopt niet, geef een foutmelding weer
 
       return;
     }
@@ -60,7 +60,7 @@ function gebruikerInloggen()
     // Stuur de gebruiker naar de homepagina
     header("location: /index.php");
   } catch (Exception $e) {
-    foutmelding(6, "/login.php", $e->getMessage()); // Geef een foutmelding weer
+    foutmelding(Foutmeldingen::ControleMislukt, "/login.php", $e->getMessage()); // Geef een foutmelding weer
   } finally {
     sluitMysqli($connectie, $loginSelectStatement); // Probeer de connectie en statement te sluiten
   }
