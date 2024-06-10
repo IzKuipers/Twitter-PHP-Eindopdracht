@@ -18,7 +18,7 @@ form.post-form textarea {
   border-radius: 10px;
   border: #ddd 1px solid;
   resize: none;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 form.post-form textarea:focus {
