@@ -72,7 +72,7 @@ function geefFoutmeldingWeer()
 
   // Geef de uiteindelijke HTML weer van de foutmelding. Opmerkelijk hier is de CSS import. Deze import zorgt ervoor dat:
   // 1) we alleen de CSS voor de foutmelding importeren als er ook echt een foutmelding is, en
-  // 2) dat de CSS voor de foutmelding altijd ingeladen is.
+  // 2) dat de CSS voor de foutmelding altijd ingeladen is als de foutmelding er _wel_ is.
   echo <<<HTML
     <link rel="stylesheet" href="/css/error.css">
     <div class="error-wrapper">
@@ -97,8 +97,11 @@ function weZijnOffline()
 }
 
 // Ik gebruik een enumeration om de foutcodes op een centrale
-// manier te noteren om ze gemakkelijk te kunnen veranderen
-enum Foutmeldingen
+// manier te noteren om ze gemakkelijk te kunnen veranderen.
+// 
+// Deze namen staan als het goed is gelijk aan de foutmeldingen
+// in de tabel eindopdracht.errors
+enum Foutmeldingen: int
 {
   case GebruikerNietGevonden = 1;
   case WachtwoordOnjuist = 2;

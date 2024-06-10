@@ -82,6 +82,7 @@ gebruikerInloggen(); // Probeer de gebruiker in te loggen
 <body>
   <!-- Main: een gecentreerde div met daarin de content van de pagina -->
   <main>
+    <img src="/images/logo.png" alt="">
     <!-- De header van het inlog-formulier -->
     <h1>Inloggen</h1>
 

@@ -25,6 +25,7 @@ $gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de 
   <header>
     <!-- Het Twitter merk met een vleugje PHP -->
     <div class="left">
+      <img src="/images/logo.png" alt="">
       <h1>Twitter<span class="sub">(PHP)</span></h1>
     </div>
     <!-- Aan de rechter kant: De gebruikersnaam met een knop om uit te loggen-->

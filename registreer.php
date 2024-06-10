@@ -65,6 +65,7 @@ registreerGebruiker(); // Probeer de gebruieker te registeren
 <body>
   <!-- Main: een gecentreerde div met daarin de content van de pagina -->
   <main>
+    <img src="/images/logo.png" alt="">
     <!-- De header van het registereer-formulier -->
     <h1>Registreren</h1>
 
