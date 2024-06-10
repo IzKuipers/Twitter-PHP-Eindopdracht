@@ -11,6 +11,8 @@ function foutmelding(Foutmeldingen $id, string $continue = "", string $message =
 
   $_SESSION["error_message"] = $message; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geefFoutmeldingWeer()
 
+  $id = $id->value;
+
   // Voeg de fout-ID en "continue" (de locatie van de 'Sluiten' knop) toe aan de GET parameters.
   // Enige POST wordt hier weggegooid, maar dat is dan toch niet meer relevant.
   header("location: $paginaPad?error=$id&continue=$continue");

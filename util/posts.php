@@ -95,9 +95,7 @@ function postLijst()
             <span class="id">· Post #$id</span>
           </div>  
           <!-- De content van de post, beschermd tegen XSS  -->
-          <div class="body">
-            $bodyVeilig
-          </div>
+          <div class="body">$bodyVeilig</div>
           <!-- Boven de content: De auteur's naam + de ID van de post -->
           <div class="actions">
             <!-- De knop om een post te "liken" -->

@@ -44,7 +44,7 @@ $gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de 
          stuurt door naar /stuurpost.php, waar de logica voor het sturen van de post leeft. -->
     <form action="/stuurpost.php" method="POST" class="post-form">
       <!-- De textarea waar de gebruiker hun bericht in kan typen -->
-      <textarea class="" placeholder="Wat gebeurt er?!" name="bericht" required></textarea>
+      <textarea class="" placeholder="Wat gebeurt er?!" name="bericht" required maxlength="512"></textarea>
       <!-- De knop om de post te versturen -->
       <input type="submit" value="Post">
     </form>

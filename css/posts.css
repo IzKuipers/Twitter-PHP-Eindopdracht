@@ -41,6 +41,7 @@ div.post-lijst div.post div.body {
   hyphens: auto;
   max-width: 500px;
   overflow: hidden;
+  white-space: pre-wrap;
 }
 
 div.post-lijst div.actions {
