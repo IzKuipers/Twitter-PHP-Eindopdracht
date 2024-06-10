@@ -105,7 +105,7 @@ $likes = totaleLikes($posts);
       </div>
     </div>
     <!-- Geef de posts van de auteur weer -->
-    <?php postLijst($posts) ?>
+    <?php postLijst($posts,true) ?>
   </main>
   <footer>Je hebt het einde bereikt!</footer>
 </body>

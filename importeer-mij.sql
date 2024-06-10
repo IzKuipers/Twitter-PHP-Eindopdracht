@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 08, 2024 at 05:37 PM
+-- Generation Time: Jun 10, 2024 at 10:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,11 +41,11 @@ CREATE TABLE `errors` (
 
 INSERT INTO `errors` (`id`, `titel`, `foutmelding`) VALUES
 (1, 'Gebruiker niet gevonden', 'De opgegeven gebruiker bestaat niet. Controleer de gegevens, en probeer het vervolgens opnieuw.'),
-(2, 'Wachtwoord onjuist', 'Het opgegeven wachtwoord is incorrect. Vul het wachtwoord nogmaals in, en probeer het vervolgens opnieuw.'),
+(2, 'Wachtwoord onjuist', 'Het opgegeven wachtwoord is incorrect. Vul je gegevens opnieuw in, en probeer het vervolgens opnieuw.'),
 (3, 'Verbinding mislukt', 'Het is niet gelukt om verbinding te maken met de database. Probeer het later opnieuw.'),
 (4, 'Wachtwoorden komen niet overeen', 'De opgegeven wachtwoorden komen niet overeen. Controleer de gegevens en probeer het opnieuw.'),
 (5, 'Gebruiker bestaat al', 'De gebruikersnaam die je probeerde te gebruiken bestaat al. Kies een andere gebruikersnaam en probeer het opnieuw.'),
-(6, 'Controle mislukt', 'Het is niet gelukt om te controleren of jouw account bestaat. Probeer het later opnieuw.'),
+(6, 'Post versturen mislukt', 'Het is niet gelukt om jouw post te versturen. Probeer het later opnieuw.'),
 (7, 'Kon de post niet liken.', 'Het is niet gelukt om de post te liken. Probeer het later opnieuw.'),
 (8, 'Versturen mislukt', 'Het is niet gelukt om jouw post te versturen. Probeer het later opnieuw.'),
 (9, 'Kon status niet aanpassen', 'Het is niet gelukt om jouw status aan te passen. Probeer het later opnieuw.');
@@ -63,13 +63,6 @@ CREATE TABLE `gebruikers` (
   `wachtwoord` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `gebruikers`
---
-
-INSERT INTO `gebruikers` (`idGebruiker`, `naam`, `status`, `wachtwoord`) VALUES
-(11, 'IzKuipers', NULL, '$2y$10$LXXVxuPNft5p5SLDBdT15OL7bsp9d94SRcaaHCwnmxyHAYbzGFU0u');
-
 -- --------------------------------------------------------
 
 --
@@ -81,7 +74,8 @@ CREATE TABLE `posts` (
   `auteur` int(11) NOT NULL,
   `body` varchar(512) NOT NULL,
   `likes` bigint(20) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `repliesTo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -115,13 +109,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `errors`
 --
 ALTER TABLE `errors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `gebruikers`
 --
 ALTER TABLE `gebruikers`
-  MODIFY `idGebruiker` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idGebruiker` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `posts`

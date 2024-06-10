@@ -117,7 +117,7 @@ function postsVanGebruiker($id)
 }
 
 // Deze functie geeft de daadwerkelijke posts weer in de HTML
-function postLijst($posts)
+function postLijst($posts, $geenReacties = false)
 {
   session_start(); // Start de sessie voor de ingelogde gebruiker's eigenschappen
 
@@ -149,10 +149,75 @@ function postLijst($posts)
 
   // Voor iedere tweet in de array $posts, doe...
   foreach ($posts as $post) {
-    echo genereerPostHtml($post, $gebruiker);
+    if ($geenReacties) {
+      echo genereerMinimalePostHtml($post, $gebruiker);
+    } else {
+      echo genereerPostHtml($post, $gebruiker);
+    }
   }
 
   echo "</div>";
+}
+
+function genereerMinimalePostHtml($post, $gebruiker)
+{
+  $body = $post['body']; // De content van de tweet
+  $bodyVeilig = htmlspecialchars($body); // De content van de tweet, beveiligd tegen XSS
+  $id = $post['id']; // De ID van de tweet
+  $aantal_likes = $post["likes"]; // De likes van de tweet
+  $timestamp = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
+
+  $gebruikerId = $post["auteur"]["idGebruiker"];
+  $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"]; // Een boolean die aangeeft of de post van de ingelogde gebruiker is
+  $gebruikersnaam = $post['auteur']['naam'] . ($postVanGebruiker ? " (jij)" : ""); // De gebruikersnaam die boven de post wordt weergegeven
+
+  // Een verwijder-knop die alleen wordt weergegeven als de post van de ingelogde gebruiker is. Die conditie wordt ook gecontroleerd in /verwijder.php
+  $verwijderKnop = $postVanGebruiker ?
+    <<<HTML
+      <a href="/verwijder.php?id=$id" class="delete-button">
+        <span class='material-icons-round'>delete</span>
+        <span>Verwijder</span>
+      </a>
+      HTML : "";
+
+  $resultaat = "";
+  $resultaat .= <<<HTML
+    <div class='post'>
+      <div class="post-content">
+      <!-- De linker kant: hier wordt de profielfoto weergegeven (een standaard foto in dit project) -->
+        <div class="left">
+          <img src="/images/pfp.png" alt="">
+        </div>
+        <!-- De rechter kant: hier wordt de content van de tweet weergegeven -->
+        <div class="right">
+          <!-- Boven de content: De auteur's naam + de ID van de post -->
+          <div class="auteur">
+            <span class="naam"><a href="/profiel.php?id=$gebruikerId">$gebruikersnaam</a></span>
+            <span class="id">· Post #$id</span>
+          </div>  
+          <!-- De content van de post, beschermd tegen XSS  -->
+          <div class="body">$bodyVeilig</div>
+          <!-- Boven de content: De auteur's naam + de ID van de post -->
+          <div class="actions">
+            <!-- De knop om een post te "liken" -->
+            <a href="/like.php?id=$id" class="like-button">
+              <span class='material-icons-round'>favorite_outline</span>
+              $aantal_likes
+            </a>
+            <!-- De verwijder knop. Deze variabele is een lege string ("") als de post niet van de ingelogde gebruiker is -->
+            $verwijderKnop
+            <!-- De geformatteerde datum en tijd van de post -->
+            <div class="timestamp">
+              $timestamp
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    HTML;
+
+  return $resultaat;
+
 }
 
 function genereerPostHtml($post, $gebruiker, $isReactie = false)
