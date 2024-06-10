@@ -113,4 +113,5 @@ enum Foutmeldingen: int
   case ControleMislukt = 6;
   case PostLikeMislukt = 7;
   case VersturenMislukt = 8;
+  case StatusUpdateMislukt = 9;
 }

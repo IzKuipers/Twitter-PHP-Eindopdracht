@@ -16,6 +16,8 @@ div.post-lijst div.post {
   border-bottom: #ddd 1px solid;
   padding: 0 20px;
   padding-bottom: 5px;
+  width: 598px;
+  max-width: 80vw;
 }
 
 div.post-lijst div.post:last-child {
@@ -73,7 +75,7 @@ div.post-lijst div.actions a.like-button span.material-icons-round {
 }
 
 div.post-lijst div.actions a.delete-button span.material-icons-round {
-  color: rgb(103, 179, 103);
+  color: deepskyblue;
 }
 
 div.post-lijst p.geen {
@@ -83,7 +85,7 @@ div.post-lijst p.geen {
   align-items: start;
   gap: 10px;
   margin-bottom: 20px;
-  width: 75%;
+  max-width: 75%;
 }
 div.post-lijst p.geen span.material-icons-round {
   color: orange;
@@ -96,5 +98,9 @@ div.post-lijst p.geen span.bericht {
 @media screen and (max-width: 500px) {
   div.post-lijst div.actions a.delete-button span:not(.material-icons-round) {
     display: none;
+  }
+
+  div.post-lijst div.post {
+    max-width: unset;
   }
 }

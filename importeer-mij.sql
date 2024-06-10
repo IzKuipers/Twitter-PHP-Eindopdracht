@@ -47,7 +47,8 @@ INSERT INTO `errors` (`id`, `titel`, `foutmelding`) VALUES
 (5, 'Gebruiker bestaat al', 'De gebruikersnaam die je probeerde te gebruiken bestaat al. Kies een andere gebruikersnaam en probeer het opnieuw.'),
 (6, 'Controle mislukt', 'Het is niet gelukt om te controleren of jouw account bestaat. Probeer het later opnieuw.'),
 (7, 'Kon de post niet liken.', 'Het is niet gelukt om de post te liken. Probeer het later opnieuw.'),
-(8, 'Versturen mislukt', 'Het is niet gelukt om jouw post te versturen. Probeer het later opnieuw.');
+(8, 'Versturen mislukt', 'Het is niet gelukt om jouw post te versturen. Probeer het later opnieuw.'),
+(9, 'Kon status niet aanpassen', 'Het is niet gelukt om jouw status aan te passen. Probeer het later opnieuw.');
 
 -- --------------------------------------------------------
 

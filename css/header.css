@@ -15,7 +15,8 @@ header div.left img {
   height: 40px;
 }
 
-header h1 {
+header h1,
+header h1 a {
   display: flex;
   align-items: start;
   gap: 10px;

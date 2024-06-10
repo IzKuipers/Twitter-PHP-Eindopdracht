@@ -2,6 +2,7 @@
 require_once ("./util/session.php");
 require_once ("./util/error.php");
 require_once ("./util/posts.php");
+require_once ("./ui/headerbar.php");
 
 session_start(); // Start de session
 verifieerIngelogd(); // Check of de gebruiker is ingelogd
@@ -23,22 +24,7 @@ $gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de 
 
 <body>
   <!-- De headerbar -->
-  <header>
-    <!-- Het Twitter merk met een vleugje PHP -->
-    <div class="left">
-      <img src="/images/logo.png" alt="">
-      <h1>Twitter<span class="sub">(PHP)</span></h1>
-    </div>
-    <!-- Aan de rechter kant: De gebruikersnaam met een knop om uit te loggen-->
-    <div class="right">
-      <div class="user">
-        <!-- Het ?= teken is een kortere versie van ? echo -->
-        <p class="username"><?= $gebruiker["naam"] ?></p>
-        <!-- We gebruiken /uitloggen.php voor het uitloggen-proces -->
-        <a href="/uitloggen.php" class="material-icons-round">logout</a>
-      </div>
-    </div>
-  </header>
+  <?php HeaderBar($gebruiker) ?>
   <!-- De daadwerkelijke content van de pagina -->
   <main>
     <!-- Het formulier voor het versturen van een post. Hij gebruikt de POST methode en
@@ -50,7 +36,7 @@ $gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de 
       <input type="submit" value="Post">
     </form>
     <!-- De functie die de tweets weergeeft-->
-    <?php postLijst() ?>
+    <?php postLijst(postsOphalen()) ?>
   </main>
   <!-- De footer duidt enkel het einde van de posts aan-->
   <footer>Je hebt het einde bereikt!</footer>

@@ -40,12 +40,48 @@ function postsOphalen()
   }
 }
 
+function postsVanGebruiker($id)
+{
+  // Maak verbinding met de database dmv verbindMysqli()
+  $connectie = verbindMysqli();
+
+  try { // Probeer...
+    global $getPostsStatement;
+
+    // De vraag aan de database: Geef mij alle data van alle posts, met de nieuwste als eerste en de oudste als laatste (descending timestamp)
+    $query = "SELECT * FROM posts WHERE auteur = ? ORDER BY timestamp DESC";
+
+    $getPostsStatement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $getPostsStatement->bind_param("i", $id);
+    $getPostsStatement->execute(); // Voer de vraag uit 
+
+    $result = array();
+
+    // Schrijf voor iedere post de data naar de respectieve variabelen. Deze data zal veranderen iedere keer dat de fetch() functie wordt uitgevoerd, vandaar de while loop die volgt.
+    $getPostsStatement->bind_result($idPost, $auteur, $body, $likes, $timestamp);
+
+    while ($getPostsStatement->fetch()) { // Ga over alle tweets in het resultaat
+      $gebruiker = gebruikerOphalen($auteur); // Verkrijg de eigenschappen van de auteur
+
+      // Voeg de tweet+auteur toe aan de lijst met posts
+      $result[] = array("id" => $idPost, "auteur" => $gebruiker, "body" => $body, "likes" => $likes, "timestamp" => $timestamp);
+    }
+
+    // Geef de array met alle "expanded" (als in iedere post + de auteur eigenschappen) terug
+    return $result;
+  } catch (Exception $e) { // Anders...
+    return array(); // Geef een lege array terug als "dummy"
+  } finally { // En ten slotte...
+    // Probeer de connectie en statement te sluiten
+    sluitMysqli($connectie, $getPostsStatement);
+  }
+}
+
 // Deze functie geeft de daadwerkelijke posts weer in de HTML
-function postLijst()
+function postLijst($posts)
 {
   session_start(); // Start de sessie voor de ingelogde gebruiker's eigenschappen
 
-  $posts = postsOphalen(); // Verkrijg alle posts met de nieuwste als eerste, en de oudste als laatste.
   $gebruiker = gebruikerUitSessie(); // Verkrijg de gebruiker uit de informatie die bij het inloggen is opgeslagen in de session
 
   echo "<div class='post-lijst'>"; // Open een DIV element met de class 'post-lijst'
@@ -55,7 +91,7 @@ function postLijst()
     echo <<<HTML
       <p class="geen">
         <span class="material-icons-round">warning</span>
-        <span class="bericht">De dood van het universum is hier! Er zijn geen posts. Zal jij de eerste tweet sturen?</span>
+        <span class="bericht">Hier zijn geen tweets! Wat een leegte...</span>
       </p>
     HTML;
   }
@@ -68,6 +104,7 @@ function postLijst()
     $aantal_likes = $post["likes"]; // De likes van de tweet
     $timestamp = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
 
+    $gebruikerId = $post["auteur"]["idGebruiker"];
     $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"]; // Een boolean die aangeeft of de post van de ingelogde gebruiker is
     $gebruikersnaam = $post['auteur']['naam'] . ($postVanGebruiker ? " (jij)" : ""); // De gebruikersnaam die boven de post wordt weergegeven
 
@@ -91,7 +128,7 @@ function postLijst()
         <div class="right">
           <!-- Boven de content: De auteur's naam + de ID van de post -->
           <div class="auteur">
-            <span class="naam">$gebruikersnaam</span>
+            <span class="naam"><a href="/profiel.php?id=$gebruikerId">$gebruikersnaam</a></span>
             <span class="id">· Post #$id</span>
           </div>  
           <!-- De content van de post, beschermd tegen XSS  -->
