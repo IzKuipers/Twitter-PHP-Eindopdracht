@@ -106,6 +106,7 @@ $status = $auteur["status"];
     <!-- Geef de posts van de auteur weer -->
     <?php postLijst($posts) ?>
   </main>
+  <footer>Je hebt het einde bereikt!</footer>
 </body>
 
 </html>
