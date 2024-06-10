@@ -219,20 +219,24 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
       $reactieForm
     HTML;
 
+  // Voor elke reactie van de post...
   foreach ($post["reacties"] as $reactie) {
-    $resultaat .= genereerPostHtml($reactie, $gebruiker, true);
+    $resultaat .= genereerPostHtml($reactie, $gebruiker, true); // Voeg alle reacties toe aan de HTML
   }
 
+  // Sluit de post-content en post-reacties divs
   $resultaat .= "</div></div>";
 
+  // Stuur de resulterende HTML terug
   return $resultaat;
 }
 
 function reactieFormulier($post)
 {
-  $id = $post["id"];
+  $id = $post["id"]; // De ID van de post
 
   return <<<HTML
+    <!-- Dit is een POST form die wordt verstuurd naar /stuurpost.php, met een hidden value die de reactie-id bevat -->
     <form class="reactie-form" method="POST" action="/stuurpost.php" id="reactieForm_$id">
       <input type="hidden" name="reactieOp" value="$id">
       <input type="text" placeholder="Wat heb je te zeggen?" name="bericht" required maxlength="256" rows="2"></textarea>
@@ -242,6 +246,7 @@ function reactieFormulier($post)
   HTML;
 }
 
+// Deze functie wordt gebruikt om het totaal aantal likes uit een lijst van posts te halen
 function totaleLikes($posts)
 {
   $likes = 0;
