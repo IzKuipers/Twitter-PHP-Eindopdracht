@@ -4,10 +4,10 @@ require_once ("gebruiker.php");
 
 // Deze functie geeft een lijst terug met alle posts. Het voegt ook de eigenschappen van
 // iedere auteur toe aan iedere tweet om het makkelijker te maken voor de HTML implementatie
-function krijg_posts()
+function postsOphalen()
 {
-  // Maak verbinding met de database dmv verbind_mysqli()
-  $connectie = verbind_mysqli();
+  // Maak verbinding met de database dmv verbindMysqli()
+  $connectie = verbindMysqli();
 
   try { // Probeer...
     global $getStatement;
@@ -24,7 +24,7 @@ function krijg_posts()
     $getStatement->bind_result($idPost, $auteur, $body, $likes, $timestamp);
 
     while ($getStatement->fetch()) { // Ga over alle tweets in het resultaat
-      $gebruiker = gebruiker_ophalen($auteur); // Verkrijg de eigenschappen van de auteur
+      $gebruiker = gebruikerOphalen($auteur); // Verkrijg de eigenschappen van de auteur
 
       // Voeg de tweet+auteur toe aan de lijst met posts
       $result[] = array("id" => $idPost, "auteur" => $gebruiker, "body" => $body, "likes" => $likes, "timestamp" => $timestamp);
@@ -36,17 +36,17 @@ function krijg_posts()
     return array(); // Geef een lege array terug als "dummy"
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten
-    sluit_mysqli($connectie, $getStatement);
+    sluitMysqli($connectie, $getStatement);
   }
 }
 
 // Deze functie geeft de daadwerkelijke posts weer in de HTML
-function post_lijst()
+function postLijst()
 {
   session_start(); // Start de sessie voor de ingelogde gebruiker's eigenschappen
 
-  $posts = krijg_posts(); // Verkrijg alle posts met de nieuwste als eerste, en de oudste als laatste.
-  $gebruiker = gebruiker_uit_sessie(); // Verkrijg de gebruiker uit de informatie die bij het inloggen is opgeslagen in de session
+  $posts = postsOphalen(); // Verkrijg alle posts met de nieuwste als eerste, en de oudste als laatste.
+  $gebruiker = gebruikerUitSessie(); // Verkrijg de gebruiker uit de informatie die bij het inloggen is opgeslagen in de session
 
   echo "<div class='post-lijst'>"; // Open een DIV element met de class 'post-lijst'
 

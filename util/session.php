@@ -2,7 +2,7 @@
 
 // Dit is een van de meest essentiele functies. Het controleert of de
 // gebruiker is ingelogd, en stuurt de gebruiker terug naar de inlogpagina als dat niet zo is.
-function verifieer_ingelogd()
+function verifieerIngelogd()
 {
   session_start(); // Start de sessie
 
@@ -16,7 +16,7 @@ function verifieer_ingelogd()
 }
 
 // Deze functie haalt de gebruiker uit de sessie
-function gebruiker_uit_sessie()
+function gebruikerUitSessie()
 {
   // Check of de gebruiker in de sessie staat
   if (!isset($_SESSION["gebruiker"])) {

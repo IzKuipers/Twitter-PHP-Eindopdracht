@@ -6,11 +6,11 @@ require_once ("./util/error.php");
 require_once ("./util/session.php");
 
 session_start(); // Start de sessie
-verifieer_ingelogd(); // Controleer of de gebruiker is ingelogd
-geef_foutmelding_weer(); // Geef een eventuele foutmelding weer
+verifieerIngelogd(); // Controleer of de gebruiker is ingelogd
+geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 
 // Probeer een connectie te maken met de database
-$connectie = verbind_mysqli();
+$connectie = verbindMysqli();
 
 if (!$connectie) { // Connectie mislukt, geef een foutmelding en stop.
   foutmelding(7, "/", $e->getMessage());
@@ -52,6 +52,6 @@ try { // Probeer...
 } catch (Exception $e) { // Anders...
   foutmelding(7, "/", $e->getMessage());
 } finally { // Ten slotte...
-  sluit_mysqli($connectie, $updateStatement); // Probeer de connectie en tweede statement te sluiten
+  sluitMysqli($connectie, $updateStatement); // Probeer de connectie en tweede statement te sluiten
   echo "<script>history.back();</script>"; // Echo een Javascript uitvoering om terug te gaan naar de vorige pagina
 }

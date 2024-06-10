@@ -2,7 +2,7 @@
 require_once ("./util/connectie.php");
 
 // Probeer met de database te verbinden
-$connectie = verbind_mysqli(false);
+$connectie = verbindMysqli(false);
 
 // Controleer of we daadwerkelijk offline zijn
 if ($connectie) {

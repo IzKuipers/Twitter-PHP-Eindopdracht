@@ -9,7 +9,7 @@ function foutmelding(int $id, string $continue = "", string $message = "")
   $huidigeUrl = parse_url($aanvraagUri); // Verkrijg de individuele onderdelen van de URI in vorm van een associative array (URL pad als "path" en de GET parameters als "query")
   $paginaPad = $huidigeUrl['path']; // Het pad van de huidige PHP pagina
 
-  $_SESSION["error_message"] = $message; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geef_foutmelding_weer()
+  $_SESSION["error_message"] = $message; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geefFoutmeldingWeer()
 
   // Voeg de fout-ID en "continue" (de locatie van de 'Sluiten' knop) toe aan de GET parameters.
   // Enige POST wordt hier weggegooid, maar dat is dan toch niet meer relevant.
@@ -18,7 +18,7 @@ function foutmelding(int $id, string $continue = "", string $message = "")
 
 // Deze foutmelding maakt de daadwerkelijke foutmelding die aan de gebruiker wordt weergegeven.
 // Dankzij deze functie kan er op iedere pagina op dezelfde manier een foutmelding worden weergegeven.
-function geef_foutmelding_weer()
+function geefFoutmeldingWeer()
 {
   // Als er geen foutmelding is, doe dan ook niks.
   if (!isset($_GET["error"], $_GET["continue"])) {
@@ -30,7 +30,7 @@ function geef_foutmelding_weer()
   $continue = $_GET["continue"]; // De href van de 'Sluiten'-knop
 
   // Verbind met de database, maar gooi geen foutmelding als de connectie is mislukt ($geef_foutmelding == false)
-  $connectie = verbind_mysqli(false);
+  $connectie = verbindMysqli(false);
 
   $titel = ""; // Titel van de dialoog
   $foutmelding = ""; // Foutmelding van de dialoog
@@ -43,7 +43,7 @@ function geef_foutmelding_weer()
     global $foutmeldingStatement, $titel, $foutmelding; // Globalen voor het weergeven van de HTML en het sluiten van de statement
 
     if (!$connectie) {
-      // Connectie mislukt: gooi een foutmelding (handmatige implementatie van $geef_foutmelding == true in verbind_mysqli())
+      // Connectie mislukt: gooi een foutmelding (handmatige implementatie van $geefFoutmelding == true in verbindMysqli())
       throw new Exception("Connectie met server mislukt");
     }
 
@@ -66,8 +66,8 @@ function geef_foutmelding_weer()
     $titel = "Dubbele fout!";
     $foutmelding = "Foutcode $id is opgetreden, maar het is niet gelukt om met de database te verbinden om de details van de foutmelding op te vragen. Onze excuses voor het ongemak.";
   } finally { // En ten slotte...
-    // Probeer de connectie en statement te sluiten via sluit_mysqli()
-    sluit_mysqli($connectie, $foutmeldingStatement);
+    // Probeer de connectie en statement te sluiten via sluitMysqli()
+    sluitMysqli($connectie, $foutmeldingStatement);
   }
 
   // Geef de uiteindelijke HTML weer van de foutmelding. Opmerkelijk hier is de CSS import. Deze import zorgt ervoor dat:
@@ -91,7 +91,7 @@ function geef_foutmelding_weer()
 }
 
 // Deze functie wordt aangeroepen als de database verbinding mislukt
-function we_zijn_offline()
+function weZijnOffline()
 {
   header("location:/offline.php"); // Stuur de gebruiker naar de offline-pagina
 }

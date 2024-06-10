@@ -1,10 +1,10 @@
 <?php
 
 // Deze functie is een middleman om gemakkelijk met een ID een gebruiker op te halen.
-function gebruiker_ophalen($id)
+function gebruikerOphalen($id)
 {
-  // Maak verbinding met de database dmv verbind_mysqli()
-  $connectie = verbind_mysqli();
+  // Maak verbinding met de database dmv verbindMysqli()
+  $connectie = verbindMysqli();
 
   try { // Probeer...
     global $selectStatement; // Maak de statement global voor het sluiten.
@@ -25,6 +25,6 @@ function gebruiker_ophalen($id)
     return array("idGebruiker" => -1, "naam" => "", "status" => "");
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten
-    sluit_mysqli($connectie, $selectStatement);
+    sluitMysqli($connectie, $selectStatement);
   }
 }

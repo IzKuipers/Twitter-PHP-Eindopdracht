@@ -5,14 +5,14 @@ require_once ("./util/error.php");
 require_once ("./util/session.php");
 
 session_start(); // Start de sessie
-verifieer_ingelogd(); // Check of de gebruiker is ingelogd
-geef_foutmelding_weer(); // Geef een eventuele foutmelding weer 
+verifieerIngelogd(); // Check of de gebruiker is ingelogd
+geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer 
 
-$gebruiker = gebruiker_uit_sessie(); // Haal de huidige gebruiker op uit de sessie
+$gebruiker = gebruikerUitSessie(); // Haal de huidige gebruiker op uit de sessie
 $gebruikerId = $gebruiker["id"]; // De ID van de gebruiker
 
 // Maak verbinding met de database
-$connectie = verbind_mysqli();
+$connectie = verbindMysqli();
 
 // Controleer of de ID van de post om te verwijderen in de GET data staat
 if (!isset($_GET["id"])) {
@@ -49,6 +49,6 @@ try { // Probeer...
 } catch (Exception $e) { // Anders...
   foutmelding(7, "/", $e->getMessage()); // Het is niet gelukt om de post te verwijderen, geef een foutmelding
 } finally { // Ten slotte...
-  sluit_mysqli($connectie); // Sluit de connectie
+  sluitMysqli($connectie); // Sluit de connectie
   echo "<script>history.back();</script>"; // Gebruik Javascript om de gebruiker terug te sturen naar de index pagina
 }

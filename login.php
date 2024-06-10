@@ -4,7 +4,7 @@ require_once ("./util/error.php");
 require_once ("./util/session.php");
 
 session_start(); // Start de sessie
-geef_foutmelding_weer(); // Geef de eventuele foutmelding weer
+geefFoutmeldingWeer(); // Geef de eventuele foutmelding weer
 
 // Deze functie wordt gebruikt om de gebruiker in te loggen via de POST data
 function gebruikerInloggen()
@@ -18,10 +18,10 @@ function gebruikerInloggen()
   $wachtwoord = $_POST["wachtwoord"]; // Het wachtwoord die de gebruiker heeft ingevoerd
 
   // Maak verbinding met de database
-  $connectie = verbind_mysqli();
+  $connectie = verbindMysqli();
 
   if (!$connectie) {
-    we_zijn_offline(); // Connectie mislukt, naar de offline pagina dan maar!
+    weZijnOffline(); // Connectie mislukt, naar de offline pagina dan maar!
     return;
   }
 
@@ -62,7 +62,7 @@ function gebruikerInloggen()
   } catch (Exception $e) {
     foutmelding(6, "/login.php", $e->getMessage()); // Geef een foutmelding weer
   } finally {
-    sluit_mysqli($connectie, $loginSelectStatement); // Probeer de connectie en statement te sluiten
+    sluitMysqli($connectie, $loginSelectStatement); // Probeer de connectie en statement te sluiten
   }
 }
 

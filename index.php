@@ -4,10 +4,10 @@ require_once ("./util/error.php");
 require_once ("./util/posts.php");
 
 session_start(); // Start de session
-verifieer_ingelogd(); // Check of de gebruiker is ingelogd
-geef_foutmelding_weer(); // Geef een potentiele foutmelding weer
+verifieerIngelogd(); // Check of de gebruiker is ingelogd
+geefFoutmeldingWeer(); // Geef een potentiele foutmelding weer
 
-$gebruiker = gebruiker_uit_sessie(); // Haal de gebruiker uit de session (voor de header van de pagina)
+$gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de header van de pagina)
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +48,7 @@ $gebruiker = gebruiker_uit_sessie(); // Haal de gebruiker uit de session (voor d
       <input type="submit" value="Post">
     </form>
     <!-- De functie die de tweets weergeeft-->
-    <?php post_lijst() ?>
+    <?php postLijst() ?>
   </main>
   <!-- De footer duidt enkel het einde van de posts aan-->
   <footer>Je hebt het einde bereikt!</footer>

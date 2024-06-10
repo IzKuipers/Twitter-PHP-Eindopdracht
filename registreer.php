@@ -1,7 +1,7 @@
 <?php
 require_once ("./util/error.php");
 
-geef_foutmelding_weer(); // Geef een eventuele foutmelding weer
+geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 
 // Deze functie wordt gebruikt om de gebruiker te registreren via de POST data
 function registreerGebruiker()
@@ -23,11 +23,11 @@ function registreerGebruiker()
     return;
   }
 
-  // Hash het wachtwoord met de builtin password_hash() functie
+  // Hash het wachtwoord met de builtin hashing-functie password_hash()
   $hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
   // Maak verbinding met de database
-  $connectie = verbind_mysqli();
+  $connectie = verbindMysqli();
 
   try { // Probeer...
     global $gebruikerInsertStatement; // Maak de statement globaal om deze later te kunnen sluiten
@@ -43,7 +43,7 @@ function registreerGebruiker()
 
     return;
   } finally { // Ten slotte...
-    sluit_mysqli($connectie, $gebruikerInsertStatement); // Probeer de connectie en statement te sluiten
+    sluitMysqli($connectie, $gebruikerInsertStatement); // Probeer de connectie en statement te sluiten
   }
 
   header("location: /login.php"); // Stuur de gebruiker naar de inlog pagina

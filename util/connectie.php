@@ -1,6 +1,6 @@
 <?php
 
-function verbind_mysqli($geef_foutmelding = true)
+function verbindMysqli($geef_foutmelding = true)
 {
   // Note to self: $pass: use pma/Izaak/passwords[1] (service "pma") for the password
   // to use the code in the context of Cortex deployment. 2FA code 3 applies here.
@@ -23,17 +23,17 @@ function verbind_mysqli($geef_foutmelding = true)
 
     return $connectie;
 
-    // We gaan er vanuit dat de verbind_mysqli() functie is vervolgd met een
-    // sluit_mysqli() referentie om de connectie te sluiten.
+    // We gaan er vanuit dat de verbindMysqli() functie is vervolgd met een
+    // sluitMysqli() referentie om de connectie te sluiten.
   } catch (Exception $e) { // Anders...
     // Dit is conditioneel: Er zijn instanties waar een visuele foutmelding niet van toepassing is
     // en op een andere manier wordt afgehandeld. Vandaar de $geef_foutmelding.
     if ($geef_foutmelding)
-      we_zijn_offline(); // Connectie mislukt, naar de offline pagina dan maar!
+      weZijnOffline(); // Connectie mislukt, naar de offline pagina dan maar!
   }
 }
 
-function sluit_mysqli($connectie, ...$statements)
+function sluitMysqli($connectie, ...$statements)
 {
   // Opmerking: Ik gebruik instanceof om te checken of de statement en
   //            connectie uberhaupt instanties zijn van de classes voordat
