@@ -17,6 +17,7 @@ $gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/homepage.css">
+  <link rel="shortcut icon" href="/images/logo.png" type="image/png">
   <title>Home - Twitter</title>
 </head>
 
