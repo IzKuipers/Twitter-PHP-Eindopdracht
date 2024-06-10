@@ -38,3 +38,12 @@ header div.user {
   align-items: center;
   gap: 10px;
 }
+
+header div.user a.material-icons-round {
+  width: 30px;
+  height: 30px;
+}
+
+header div.user a.material-icons-round:hover {
+  background-color: #ddd;
+}

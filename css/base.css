@@ -13,6 +13,7 @@
   outline: none;
   color: inherit;
   font-size: inherit;
+  transition: all 0.3s;
 }
 
 *:not(.material-icons-round) {

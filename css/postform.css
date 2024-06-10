@@ -9,7 +9,7 @@ form.post-form {
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: #ddd 1px solid;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 form.post-form textarea {
@@ -21,6 +21,10 @@ form.post-form textarea {
   font-size: 16px;
 }
 
+form.post-form textarea:focus {
+  border: deepskyblue 1px solid;
+}
+
 form.post-form input[type="submit"] {
   display: block;
   background-color: deepskyblue;
@@ -30,6 +34,7 @@ form.post-form input[type="submit"] {
   color: white;
   border: none;
   font-weight: bold;
+  margin-top: 5px;
 }
 
 form.post-form input[type="submit"]:hover {

@@ -29,12 +29,17 @@ main form {
 }
 
 main form input {
-  padding: 0 30px;
+  padding: 0 27px;
   border: none;
   background-color: #eee;
   border-radius: 8px;
   width: 400px;
   height: 50px;
+  border: #fff0 3px solid;
+}
+
+main form input:focus {
+  border: deepskyblue 3px solid;
 }
 
 main h1 {
@@ -48,9 +53,10 @@ main h1 {
 main form input[type="submit"] {
   background-color: deepskyblue;
   color: white;
-  line-height: 50px;
+  line-height: 44px;
   border-radius: 25px;
   margin-top: 40px;
+  font-weight: bold;
 }
 
 main form input[type="submit"]:hover {
