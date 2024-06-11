@@ -30,6 +30,10 @@ div.post-lijst div.post:not(.reactie):has(div.post-reacties) {
   position: relative;
 }
 
+div.post-lijst div.post div.post-reacties {
+  padding-left: 15px;
+}
+/* 
 div.post-lijst div.post:not(.reactie):has(div.post-reacties)::before {
   content: "";
   position: absolute;
@@ -40,7 +44,7 @@ div.post-lijst div.post:not(.reactie):has(div.post-reacties)::before {
   background-color: #ddd;
   z-index: 0;
 }
-
+ */
 div.post-lijst div.post.reactie {
   margin-top: 10px;
   width: 100%;
