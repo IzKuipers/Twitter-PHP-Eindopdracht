@@ -7,12 +7,12 @@ body {
 main {
   margin: 0 auto;
   width: fit-content;
-  max-width: 600px;
+  max-width: 700px;
   border: #ddd 1px solid;
   margin-top: 30px;
   border-radius: 10px;
   overflow: hidden;
-  width: 600px;
+  width: 700px;
 }
 
 div.profile {
@@ -85,7 +85,7 @@ div.profile div.bottom p.status input:not([readonly="true"]) {
   opacity: 1;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   main {
     margin-top: 0;
     width: 100%;

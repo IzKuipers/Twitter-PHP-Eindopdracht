@@ -3,7 +3,7 @@ form.post-form {
   flex-direction: column;
   align-items: end;
   gap: 10px;
-  width: 600px;
+  width: 700px;
   max-width: 80vw;
   padding: 0 15px;
   padding-bottom: 15px;
@@ -45,7 +45,7 @@ form.post-form input[type="submit"]:active {
   background-color: rgb(0, 165, 220);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
   form.post-form {
     max-width: unset;
     width: 100%;

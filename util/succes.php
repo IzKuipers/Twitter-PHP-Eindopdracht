@@ -3,6 +3,7 @@ require_once ("connectie.php");
 
 session_start(); // Start de sessie als het bestand wordt geïmporteerd
 
+// Deze functie geeft een succesmelding weer als iets is gelukt
 function geefSuccesWeer()
 {
   // Als er geen succesmelding is, doe dan ook niks.
@@ -11,10 +12,9 @@ function geefSuccesWeer()
   }
 
   $id = $_SESSION["succes"]; // De ID van de succesmelding
+  unset($_SESSION["succes"]); // We hebben de succes-ID nu gebruikt, dus hebben we hem niet meer nodig.
 
-  unset($_SESSION["succes"]); // We hebben de succesmelding nu gebruikt, dus haal hem weg.
-
-  // Verbind met de database, maar gooi geen succesmelding als de connectie is mislukt ($geef_succesmelding == false)
+  // Verbind met de database, maar gooi geen succesmelding als de connectie is mislukt ($geefFoutmelding == false)
   $connectie = verbindMysqli(false);
 
   $icon = "check_circle";
