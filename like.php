@@ -52,5 +52,5 @@ try { // Probeer...
 } finally { // Ten slotte...
   sluitMysqli($connectie, $statement); // Probeer de connectie en tweede statement te sluiten
   $_SESSION["succes"] = 4;
-  "<script>history.back();</script>";
+  echo "<script>history.back();</script>";
 }
