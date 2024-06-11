@@ -13,7 +13,7 @@
   "background_color": "#00bfff",
   "display": "standalone",
   "scope": "/",
-  "theme_color": "#ee7862",
+  "theme_color": "#00bfff",
   "shortcuts": [
     {
       "name": "Twitter",

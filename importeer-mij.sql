@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 10, 2024 at 10:14 PM
+-- Generation Time: Jun 11, 2024 at 12:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -78,6 +78,32 @@ CREATE TABLE `posts` (
   `repliesTo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `succes`
+--
+
+CREATE TABLE `succes` (
+  `id` int(11) NOT NULL,
+  `caption` varchar(50) NOT NULL,
+  `icon` varchar(50) NOT NULL DEFAULT 'check_circle'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `succes`
+--
+
+INSERT INTO `succes` (`id`, `caption`, `icon`) VALUES
+(1, 'Account aangemaakt', 'person_add'),
+(2, 'Je bent ingelogd', 'login'),
+(3, 'Tweet geplaatst', 'check_circle'),
+(4, 'Post geliked', 'thumb_up'),
+(5, 'Reactie geplaatst', 'reply'),
+(6, 'Je bent uigelogd', 'logout'),
+(7, 'Post succesvol verwijderd', 'delete'),
+(8, 'Status geüpdatet', 'check_circle');
+
 --
 -- Indexes for dumped tables
 --
@@ -102,6 +128,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`idPost`);
 
 --
+-- Indexes for table `succes`
+--
+ALTER TABLE `succes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -122,6 +154,12 @@ ALTER TABLE `gebruikers`
 --
 ALTER TABLE `posts`
   MODIFY `idPost` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `succes`
+--
+ALTER TABLE `succes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
