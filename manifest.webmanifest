@@ -10,10 +10,10 @@
   ],
   "id": "com.twitter.php",
   "start_url": "/",
-  "background_color": "#00bfff",
+  "background_color": "#FFFFFF",
   "display": "standalone",
   "scope": "/",
-  "theme_color": "#00bfff",
+  "theme_color": "#FFFFFF",
   "shortcuts": [
     {
       "name": "Twitter",
