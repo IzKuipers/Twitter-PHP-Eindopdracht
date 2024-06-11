@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 11, 2024 at 12:08 PM
+-- Generation Time: Jun 11, 2024 at 06:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eindopdracht`
+-- Database: `twitter`
 --
-CREATE DATABASE IF NOT EXISTS `eindopdracht` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `eindopdracht`;
+CREATE DATABASE IF NOT EXISTS `twitter` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `twitter`;
 
 -- --------------------------------------------------------
 
@@ -29,11 +29,12 @@ USE `eindopdracht`;
 -- Table structure for table `errors`
 --
 
-CREATE TABLE `errors` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `errors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `titel` varchar(100) NOT NULL,
-  `foutmelding` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `foutmelding` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `errors`
@@ -56,12 +57,14 @@ INSERT INTO `errors` (`id`, `titel`, `foutmelding`) VALUES
 -- Table structure for table `gebruikers`
 --
 
-CREATE TABLE `gebruikers` (
-  `idGebruiker` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `gebruikers` (
+  `idGebruiker` int(11) NOT NULL AUTO_INCREMENT,
   `naam` varchar(128) NOT NULL,
   `status` varchar(128) DEFAULT NULL,
-  `wachtwoord` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `wachtwoord` varchar(60) NOT NULL,
+  PRIMARY KEY (`idGebruiker`),
+  UNIQUE KEY `naam` (`naam`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -69,97 +72,44 @@ CREATE TABLE `gebruikers` (
 -- Table structure for table `posts`
 --
 
-CREATE TABLE `posts` (
-  `idPost` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `posts` (
+  `idPost` int(11) NOT NULL AUTO_INCREMENT,
   `auteur` int(11) NOT NULL,
   `body` varchar(512) NOT NULL,
   `likes` bigint(20) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `repliesTo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `repliesTo` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idPost`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `succes`
+-- Table structure for table `toast`
 --
 
-CREATE TABLE `succes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `toast` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `caption` varchar(50) NOT NULL,
-  `icon` varchar(50) NOT NULL DEFAULT 'check_circle'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `icon` varchar(50) NOT NULL DEFAULT 'check_circle',
+  `type` varchar(50) NOT NULL DEFAULT 'succes',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `succes`
+-- Dumping data for table `toast`
 --
 
-INSERT INTO `succes` (`id`, `caption`, `icon`) VALUES
-(1, 'Account aangemaakt', 'person_add'),
-(2, 'Je bent ingelogd', 'login'),
-(3, 'Tweet geplaatst', 'check_circle'),
-(4, 'Post geliked', 'thumb_up'),
-(5, 'Reactie geplaatst', 'reply'),
-(6, 'Je bent uigelogd', 'logout'),
-(7, 'Post succesvol verwijderd', 'delete'),
-(8, 'Status geüpdatet', 'check_circle');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `errors`
---
-ALTER TABLE `errors`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `gebruikers`
---
-ALTER TABLE `gebruikers`
-  ADD PRIMARY KEY (`idGebruiker`),
-  ADD UNIQUE KEY `naam` (`naam`);
-
---
--- Indexes for table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`idPost`);
-
---
--- Indexes for table `succes`
---
-ALTER TABLE `succes`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `errors`
---
-ALTER TABLE `errors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `gebruikers`
---
-ALTER TABLE `gebruikers`
-  MODIFY `idGebruiker` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `posts`
---
-ALTER TABLE `posts`
-  MODIFY `idPost` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `succes`
---
-ALTER TABLE `succes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+INSERT INTO `toast` (`id`, `caption`, `icon`, `type`) VALUES
+(1, 'Account aangemaakt', 'person_add', 'succes'),
+(2, 'Je bent ingelogd', 'login', 'succes'),
+(3, 'Post geplaatst', 'check_circle', 'succes'),
+(4, 'Post geliked', 'thumb_up', 'melding'),
+(5, 'Reactie geplaatst', 'reply', 'succes'),
+(6, 'Je bent uitgelogd', 'logout', 'melding'),
+(7, 'Post succesvol verwijderd', 'delete', 'succes'),
+(8, 'Status geüpdatet', 'check_circle', 'melding'),
+(9, 'Je moet ingelogd zijn', 'warning', 'waarschuwing');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

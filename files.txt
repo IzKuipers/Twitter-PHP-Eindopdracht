@@ -77,9 +77,9 @@ util
     -> uitloggen()
        Deze functie is gebruikt om de gebruiker uit te loggen.
 
-  succes.php - Verantwoordelijk voor de succes-berichten
-    -> geefSuccesWeer()
-       Deze functie geeft een succesmelding weer als iets is gelukt
+  toast.php - Verantwoordelijk voor de toast-berichten
+    -> geeftoastWeer()
+       Deze functie geeft een toastmelding weer als iets is gelukt
 
 index.php - De home pagina van de site
 like.php - Deze pagina is verantwoordelijk voor het liken van een post

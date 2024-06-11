@@ -42,7 +42,6 @@ function postsOphalen()
 // Deze functie haalt alle reacties van een post op door gebruik te maken van recursie
 function reactiesVanPost($id)
 {
-
   // Maak verbinding met de database dmv verbindMysqli()
   $connectie = verbindMysqli();
 

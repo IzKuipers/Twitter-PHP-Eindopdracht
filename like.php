@@ -5,7 +5,6 @@ require_once ("./util/connectie.php");
 require_once ("./util/error.php");
 require_once ("./util/session.php");
 
-session_start(); // Start de sessie
 verifieerIngelogd(); // Controleer of de gebruiker is ingelogd
 geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 
@@ -51,6 +50,6 @@ try { // Probeer...
   foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage());
 } finally { // Ten slotte...
   sluitMysqli($connectie, $statement); // Probeer de connectie en tweede statement te sluiten
-  $_SESSION["succes"] = 4;
+  $_SESSION["toast"] = 4;
   echo "<script>history.back();</script>";
 }

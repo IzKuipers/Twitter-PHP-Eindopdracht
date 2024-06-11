@@ -8,6 +8,7 @@ function verifieerIngelogd()
 
   // Check of de gebruiker in de sessie staat
   if (!isset($_SESSION["gebruiker"])) {
+    $_SESSION["toast"] = 9;
     header("Location: /login.php"); // Gebruiker staat niet in de sessie, stuur door naar de login pagina
     die;
   }
@@ -35,9 +36,9 @@ function gebruikerUitSessie()
 // Deze functie is gebruikt om de gebruiker uit te loggen.
 function uitloggen()
 {
-  session_start(); // Start de session
+  session_start(); // Start de sessie
 
   unset($_SESSION["gebruiker"]); // Haal de gebruiker uit de session
-  $_SESSION["succes"] = 6;
+  $_SESSION["toast"] = 6;
   header("location:/login.php"); // Stuur de gebruiker door naar het login scherm
 }

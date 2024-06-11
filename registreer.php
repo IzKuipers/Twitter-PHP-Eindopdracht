@@ -44,7 +44,7 @@ function registreerGebruiker()
     sluitMysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
   }
 
-  $_SESSION["succes"] = 1;
+  $_SESSION["toast"] = 1;
   header("location: /login.php"); // Stuur de gebruiker naar de inlog pagina
 }
 

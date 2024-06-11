@@ -3,7 +3,6 @@
 require_once ("./util/error.php");
 require_once ("./util/session.php");
 
-session_start(); // Start de sessie
 geefFoutmeldingWeer(); // Geef de eventuele foutmelding weer
 
 // Deze functie wordt gebruikt om de gebruiker in te loggen via de POST data
@@ -56,7 +55,7 @@ function gebruikerInloggen()
     $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
 
     // Stuur de gebruiker naar de homepagina
-    $_SESSION["succes"] = 2;
+    $_SESSION["toast"] = 2;
     header("location: /");
   } catch (Exception $e) {
     foutmelding(Foutmeldingen::ControleMislukt, "/login.php", $e->getMessage()); // Geef een foutmelding weer

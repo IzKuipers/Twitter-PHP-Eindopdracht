@@ -10,7 +10,7 @@ function verbindMysqli($geefFoutmelding = true)
   $host = "127.0.0.1"; // De hostname (of evt. de IP) van de SQL database (op Linux is het 127.0.0.1 in plaats van localhost)
   $user = "root"; // De gebruikersnaam van de database
   $pass = ""; // Het wachtwoord van de database gebruiker
-  $database = "eindopdracht"; // De SQL database om mee te verbinden (zie importeer-mij.sql voor de database import)
+  $database = "twitter"; // De SQL database om mee te verbinden (zie importeer-mij.sql voor de database import)
 
   try { // Probeer...
     // Maak een nieuwe MySQLi class instantie aan om met de database te communiceren

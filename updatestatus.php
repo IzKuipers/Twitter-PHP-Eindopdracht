@@ -5,7 +5,6 @@ require_once ("./util/session.php");
 require_once ("./util/posts.php");
 require_once ("./util/connectie.php");
 
-session_start(); // Start de session
 verifieerIngelogd(); // Check of de gebruiker is ingelogd
 $gebruiker = gebruikerUitSessie(); // De gebruiker vanuit de sessie
 

@@ -4,7 +4,6 @@ require_once ("./util/connectie.php");
 require_once ("./util/error.php");
 require_once ("./util/session.php");
 
-session_start(); // Start de sessie
 verifieerIngelogd(); // Check of de gebruiker is ingelogd
 geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer 
 
@@ -50,6 +49,6 @@ try { // Probeer...
   foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage()); // Het is niet gelukt om de post te verwijderen, geef een foutmelding
 } finally { // Ten slotte...
   sluitMysqli($connectie); // Sluit de connectie
-  $_SESSION["succes"] = 7;
+  $_SESSION["toast"] = 7;
   header("location:/index.php");
 }

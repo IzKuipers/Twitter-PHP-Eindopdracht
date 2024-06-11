@@ -1,16 +1,16 @@
 <?php
 require_once ("connectie.php");
-require_once ("succes.php");
-
-session_start(); // Start de sessie als het bestand wordt geïmporteerd
+require_once ("toast.php");
 
 function foutmelding(Foutmeldingen $id, string $continue = "", string $message = "")
 {
+  session_start(); // Start de sessie voor fout_details
+
   $aanvraagUri = $_SERVER["REQUEST_URI"]; // Dit is de Uniform Resource Identifier, in feiten gewoon de URL van de pagina, inclusief de GET parameters en Hash
   $huidigeUrl = parse_url($aanvraagUri); // Verkrijg de individuele onderdelen van de URI in vorm van een associative array (URL pad als "path" en de GET parameters als "query")
   $paginaPad = $huidigeUrl['path']; // Het pad van de huidige PHP pagina
 
-  $_SESSION["error_message"] = $message; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geefFoutmeldingWeer()
+  $_SESSION["fout_details"] = $message; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geefFoutmeldingWeer()
 
   $id = $id->value;
 
@@ -23,10 +23,12 @@ function foutmelding(Foutmeldingen $id, string $continue = "", string $message =
 // Dankzij deze functie kan er op iedere pagina op dezelfde manier een foutmelding worden weergegeven.
 function geefFoutmeldingWeer()
 {
-  geefSuccesWeer();
+  session_start(); // Start de sessie voor fout_details
+  geeftoastWeer(); // laat een eventuele toast zien als deze er is
+
   // Als er geen foutmelding is, doe dan ook niks.
   if (!isset($_GET["error"], $_GET["continue"])) {
-    unset($_SESSION["error_message"]);
+    unset($_SESSION["fout_details"]);
     return;
   }
 
@@ -38,14 +40,12 @@ function geefFoutmeldingWeer()
 
   $titel = ""; // Titel van de dialoog
   $foutmelding = ""; // Foutmelding van de dialoog
-  $details = (isset($_SESSION["error_message"]) ? $_SESSION["error_message"] : "(geen)"); // De technische informatie, met een ternary operator om te checken of die informatie ook echt is meegestuurd met de foutmelding
+  $details = (isset($_SESSION["fout_details"]) ? $_SESSION["fout_details"] : "(geen)"); // De technische informatie, met een ternary operator om te checken of die informatie ook echt is meegestuurd met de foutmelding
 
-  // We hebben de error_message nu gebruikt, dus eet hem op omdat we hem niet meer nodig hebben.
-  unset($_SESSION["error_message"]);
+  // We hebben de fout_details nu gebruikt, dus eet hem op omdat we hem niet meer nodig hebben.
+  unset($_SESSION["fout_details"]);
 
   try { // Probeer...
-    global $titel, $foutmelding; // Globalen voor het weergeven van de HTML en het sluiten van de statement
-
     if (!$connectie) {
       // Connectie mislukt: gooi een foutmelding (handmatige implementatie van $geefFoutmelding == true in verbindMysqli())
       throw new Exception("Connectie met server mislukt");

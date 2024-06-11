@@ -7,7 +7,6 @@ require_once ("./util/error.php");
 require_once ("./util/posts.php");
 require_once ("./ui/headerbar.php");
 
-session_start(); // Start de sessie
 verifieerIngelogd(); // Controleer of de gebruiker is ingelogd
 geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 

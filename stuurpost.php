@@ -3,7 +3,6 @@
 require_once ("./util/session.php");
 require_once ("./util/error.php");
 
-session_start(); // Start de sessie
 verifieerIngelogd(); // Check of de gebruiker is ingelogd
 geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 
@@ -35,9 +34,9 @@ try { // Probeer...
   sluitMysqli($connectie, $statement);
 }
 
-$succesCode = !$reageertOp ? 3 : 5;
+$toastCode = !$reageertOp ? 3 : 5;
 
-$_SESSION["succes"] = $succesCode;
+$_SESSION["toast"] = $toastCode;
 
 // Stuur de gebruiker terug naar de index pagina
 header("location:/");

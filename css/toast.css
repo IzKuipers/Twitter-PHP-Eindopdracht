@@ -1,4 +1,4 @@
-div.succes-wrapper {
+div.toast-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,22 +8,33 @@ div.succes-wrapper {
   justify-content: center;
   align-items: center;
   pointer-events: none;
+  z-index: 10000;
 }
 
-div.succes-wrapper div.succes {
+div.toast-wrapper div.toast {
   display: flex;
   align-items: center;
   padding: 20px;
   border-radius: 10px;
-  background-color: rgb(85, 156, 85);
   color: white;
   gap: 10px;
   height: 45px;
   transition: all 0.3s;
-  border: rgb(116, 212, 116) 1px solid;
+  background-color: deepskyblue;
 }
 
-div.succes-wrapper div.succes:not(.visible) {
+div.toast-wrapper div.toast.waarschuwing {
+  background-color: rgb(255, 166, 0);
+}
+
+div.toast-wrapper div.toast.fout {
+  background-color: red;
+}
+div.toast-wrapper div.toast.succes {
+  background-color: rgb(85, 156, 85);
+}
+
+div.toast-wrapper div.toast:not(.visible) {
   translate: 0 -50px;
   opacity: 0;
   pointer-events: none;
