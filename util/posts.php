@@ -10,20 +10,18 @@ function postsOphalen()
   $connectie = verbindMysqli();
 
   try { // Probeer...
-    global $getStatement;
-
     // De vraag aan de database: Geef mij alle data van alle posts, met de nieuwste als eerste en de oudste als laatste (descending timestamp)
     $query = "SELECT * FROM posts WHERE repliesTo IS NULL ORDER BY timestamp DESC";
 
-    $getStatement = $connectie->prepare($query); // Bereid de vraag aan de database voor
-    $getStatement->execute(); // Voer de vraag uit 
+    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $statement->execute(); // Voer de vraag uit 
 
     $result = array();
 
     // Schrijf voor iedere post de data naar de respectieve variabelen. Deze data zal veranderen iedere keer dat de fetch() functie wordt uitgevoerd, vandaar de while loop die volgt.
-    $getStatement->bind_result($idPost, $auteur, $body, $likes, $timestamp, $reageertOp);
+    $statement->bind_result($idPost, $auteur, $body, $likes, $timestamp, $reageertOp);
 
-    while ($getStatement->fetch()) { // Ga over alle tweets in het resultaat
+    while ($statement->fetch()) { // Ga over alle tweets in het resultaat
       $gebruiker = gebruikerOphalen($auteur); // Verkrijg de eigenschappen van de auteur
       $reacties = reactiesVanPost($idPost); // Verkrijg de reacties van de post
 
@@ -37,7 +35,7 @@ function postsOphalen()
     return array(); // Geef een lege array terug als "dummy"
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten
-    sluitMysqli($connectie, $getStatement);
+    sluitMysqli($connectie, $statement);
   }
 }
 
@@ -51,16 +49,16 @@ function reactiesVanPost($id)
     // De vraag aan de database: Geef mij alle data van alle posts, met de nieuwste als eerste en de oudste als laatste (descending timestamp)
     $query = "SELECT * FROM posts WHERE repliesTo = ? ORDER BY timestamp DESC";
 
-    $getStatement = $connectie->prepare($query); // Bereid de vraag aan de database voor
-    $getStatement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-    $getStatement->execute(); // Voer de vraag uit 
+    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
+    $statement->execute(); // Voer de vraag uit 
 
     $result = array();
 
     // Schrijf voor iedere post de data naar de respectieve variabelen. Deze data zal veranderen iedere keer dat de fetch() functie wordt uitgevoerd, vandaar de while loop die volgt.
-    $getStatement->bind_result($idPost, $auteur, $body, $likes, $timestamp, $reageertOp);
+    $statement->bind_result($idPost, $auteur, $body, $likes, $timestamp, $reageertOp);
 
-    while ($getStatement->fetch()) { // Ga over alle tweets in het resultaat
+    while ($statement->fetch()) { // Ga over alle tweets in het resultaat
       $gebruiker = gebruikerOphalen($auteur); // Verkrijg de eigenschappen van de auteur
 
       $reacties = reactiesVanPost($idPost);
@@ -75,7 +73,7 @@ function reactiesVanPost($id)
     return array(); // Geef een lege array terug als "dummy"
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten
-    sluitMysqli($connectie, $getStatement);
+    sluitMysqli($connectie, $statement);
   }
 }
 
@@ -88,16 +86,16 @@ function postsVanGebruiker($id)
     // De vraag aan de database: Geef mij alle data van alle posts, met de nieuwste als eerste en de oudste als laatste (descending timestamp)
     $query = "SELECT * FROM posts WHERE auteur = ? ORDER BY timestamp DESC";
 
-    $getPostsStatement = $connectie->prepare($query); // Bereid de vraag aan de database voor
-    $getPostsStatement->bind_param("i", $id);
-    $getPostsStatement->execute(); // Voer de vraag uit 
+    $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
+    $statement->bind_param("i", $id);
+    $statement->execute(); // Voer de vraag uit 
 
     $result = array();
 
     // Schrijf voor iedere post de data naar de respectieve variabelen. Deze data zal veranderen iedere keer dat de fetch() functie wordt uitgevoerd, vandaar de while loop die volgt.
-    $getPostsStatement->bind_result($idPost, $auteur, $body, $likes, $timestamp, $reageertOp);
+    $statement->bind_result($idPost, $auteur, $body, $likes, $timestamp, $reageertOp);
 
-    while ($getPostsStatement->fetch()) { // Ga over alle tweets in het resultaat
+    while ($statement->fetch()) { // Ga over alle tweets in het resultaat
       $gebruiker = gebruikerOphalen($auteur); // Verkrijg de eigenschappen van de auteur
 
       $reacties = reactiesVanPost($idPost);
@@ -112,7 +110,7 @@ function postsVanGebruiker($id)
     return array(); // Geef een lege array terug als "dummy"
   } finally { // En ten slotte...
     // Probeer de connectie en statement te sluiten
-    sluitMysqli($connectie, $getPostsStatement);
+    sluitMysqli($connectie, $statement);
   }
 }
 

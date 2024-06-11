@@ -34,12 +34,13 @@ $likes = totaleLikes($posts);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/profile.css">
+  <link rel="shortcut icon" href="/images/logo.png" type="image/png">
   <title><?= $auteur["naam"] ?> - Twitter</title>
   <script defer>
     // Deze functie wordt gebruikt om de status te kunnen veranderen

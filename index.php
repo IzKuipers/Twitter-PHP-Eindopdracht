@@ -12,7 +12,7 @@ $gebruiker = gebruikerUitSessie(); // Haal de gebruiker uit de session (voor de 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
   <meta charset="UTF-8">

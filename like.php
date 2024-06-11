@@ -29,29 +29,27 @@ if (!isset($_GET["id"])) {
 $id = $_GET["id"]; // De ID van de post
 
 try { // Probeer...
-  global $verwijderStatement, $updateStatement; // Maak de update statement globaal om ze in de finally te kunnen sluiten
-
   // De vraag aan de database: Geef mij de likes van alle posts wiens ID gelijk staat aan ?
   $query = "SELECT likes FROM posts WHERE idPost = ?";
 
-  $verwijderStatement = $connectie->prepare($query); // Bereid de vraag voor
-  $verwijderStatement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-  $verwijderStatement->execute(); // Voer de vraag uit
-  $verwijderStatement->bind_result($likes); // Schrijf de likes naar de $likes variabele
-  $verwijderStatement->fetch(); // Vraag het resultaat eenmalig op: ID's zijn uniek dus een while loop is overbodig 
-  $verwijderStatement->close(); // Sluit de eerste statement
+  $statement = $connectie->prepare($query); // Bereid de vraag voor
+  $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
+  $statement->execute(); // Voer de vraag uit
+  $statement->bind_result($likes); // Schrijf de likes naar de $likes variabele
+  $statement->fetch(); // Vraag het resultaat eenmalig op: ID's zijn uniek dus een while loop is overbodig 
+  $statement->close(); // Sluit de eerste statement
 
   $likes++; // Verhoog het aantal likes met 1
 
   // De tweede vraag aan de database: Verander de likes van alle posts wiens ID gelijk staat aan ?
   $query = "UPDATE posts SET likes = ? WHERE idPost = ?";
 
-  $updateStatement = $connectie->prepare($query); // Bereid de tweede vraag voor
-  $updateStatement->bind_param("ii", $likes, $id); // Vervang het vraagteken met de daadwerkelijke ID
-  $updateStatement->execute(); // Voer de tweede vraag uit
+  $statement = $connectie->prepare($query); // Bereid de tweede vraag voor
+  $statement->bind_param("ii", $likes, $id); // Vervang het vraagteken met de daadwerkelijke ID
+  $statement->execute(); // Voer de tweede vraag uit
 } catch (Exception $e) { // Anders...
   foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage());
 } finally { // Ten slotte...
-  sluitMysqli($connectie, $updateStatement); // Probeer de connectie en tweede statement te sluiten
+  sluitMysqli($connectie, $statement); // Probeer de connectie en tweede statement te sluiten
   echo "<script>history.back();</script>"; // Echo een Javascript uitvoering om terug te gaan naar de vorige pagina
 }

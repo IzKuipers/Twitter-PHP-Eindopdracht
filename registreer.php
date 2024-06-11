@@ -30,20 +30,18 @@ function registreerGebruiker()
   $connectie = verbindMysqli();
 
   try { // Probeer...
-    global $gebruikerInsertStatement; // Maak de statement globaal om deze later te kunnen sluiten
-
     // De vraag aan de database: Maak een rij aan in de gebruikers tabel met gebruikersnaam ? en wachtwoord-hash ?
     $query = "INSERT INTO gebruikers(naam,wachtwoord) values (?,?)";
 
-    $gebruikerInsertStatement = $connectie->prepare($query); // Bereid de vraag voor
-    $gebruikerInsertStatement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
-    $gebruikerInsertStatement->execute(); // Voer de vraag uit
+    $statement = $connectie->prepare($query); // Bereid de vraag voor
+    $statement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
+    $statement->execute(); // Voer de vraag uit
   } catch (Exception $e) { // Anders...
     foutmelding(Foutmeldingen::GebruikerBestaatAl, "/registreer.php", $e->getMessage()); // Geef een foutmelding weer als het niet is gelukt om de gebruiker aan te maken
 
     return;
   } finally { // Ten slotte...
-    sluitMysqli($connectie, $gebruikerInsertStatement); // Probeer de connectie en statement te sluiten
+    sluitMysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
   }
 
   header("location: /login.php"); // Stuur de gebruiker naar de inlog pagina
@@ -53,7 +51,7 @@ registreerGebruiker(); // Probeer de gebruieker te registeren
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 
 <head>
   <meta charset="UTF-8">
