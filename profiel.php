@@ -41,6 +41,7 @@ $likes = totaleLikes($posts);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/profile.css">
   <link rel="shortcut icon" href="/images/logo.png" type="image/png">
+  <link rel="manifest" href="/manifest.webmanifest">
   <title><?= $auteur["naam"] ?> - Twitter</title>
   <script defer>
     // Deze functie wordt gebruikt om de status te kunnen veranderen

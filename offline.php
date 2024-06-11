@@ -19,6 +19,7 @@ if ($connectie) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/offline.css">
   <link rel="shortcut icon" href="/images/logo.png" type="image/png">
+  <link rel="manifest" href="/manifest.webmanifest">
   <title>We zijn offline!</title>
 </head>
 

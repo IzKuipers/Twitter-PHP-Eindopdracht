@@ -1,0 +1,32 @@
+{
+  "short_name": "Twitter",
+  "name": "Twitter PHP",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "300x300"
+    }
+  ],
+  "id": "com.twitter.php",
+  "start_url": "/",
+  "background_color": "#00bfff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#ee7862",
+  "shortcuts": [
+    {
+      "name": "Twitter",
+      "short_name": "Twitter",
+      "description": "Twitter",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/images/logo.png",
+          "sizes": "300x300"
+        }
+      ]
+    }
+  ],
+  "description": "Twitter"
+}

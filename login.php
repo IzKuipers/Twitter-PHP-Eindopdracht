@@ -77,6 +77,7 @@ gebruikerInloggen(); // Probeer de gebruiker in te loggen
   <title>Inloggen - Twitter</title>
   <link rel="stylesheet" href="/css/loginpage.css">
   <link rel="shortcut icon" href="/images/logo.png" type="image/png">
+  <link rel="manifest" href="/manifest.webmanifest">
 </head>
 
 <body>
