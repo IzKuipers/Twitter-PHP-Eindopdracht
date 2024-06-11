@@ -39,6 +39,7 @@ function postsOphalen()
   }
 }
 
+// Deze functie haalt alle reacties van een post op door gebruik te maken van recursie
 function reactiesVanPost($id)
 {
 
@@ -77,6 +78,7 @@ function reactiesVanPost($id)
   }
 }
 
+// Deze functie haalt de posts op van de gebruiker $id
 function postsVanGebruiker($id)
 {
   // Maak verbinding met de database dmv verbindMysqli()
@@ -112,6 +114,8 @@ function postsVanGebruiker($id)
     // Probeer de connectie en statement te sluiten
     sluitMysqli($connectie, $statement);
   }
+
+  return array();
 }
 
 // Deze functie geeft de daadwerkelijke posts weer in de HTML
@@ -157,6 +161,7 @@ function postLijst($posts, $geenReacties = false)
   echo "</div>";
 }
 
+// Deze functie genereert de minimale HTML van een POST (gebruikt voor het profiel)
 function genereerMinimalePostHtml($post, $gebruiker)
 {
   $body = $post['body']; // De content van de tweet
@@ -218,6 +223,7 @@ function genereerMinimalePostHtml($post, $gebruiker)
 
 }
 
+// Deze functie genereert de HTML van een POST met de reacties door gebruik te maken van recursion (gebruikt voor de index pagina)
 function genereerPostHtml($post, $gebruiker, $isReactie = false)
 {
   $body = $post['body']; // De content van de tweet
@@ -294,6 +300,7 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
   return $resultaat;
 }
 
+// Deze functie genereert de HTML voor het reactie-veld wat normaliter bij ieder bericht te zien is
 function reactieFormulier($post)
 {
   $id = $post["id"]; // De ID van de post

@@ -1,0 +1,99 @@
+temp
+  clearsession.php - Maakt de sessie leeg en gaat terug naar de index
+  dumpsession.php - Dumpt de sessie met var_dump
+  dumpuri.php - Laat de request URI en parsed request URI zien
+ui
+  headerbar.php - De UI van de headerbar
+    -> HeaderBar($gebruiker)
+       Rendert de headerbar door gebruik te maken van de eigenschappen van de gebruiker
+util
+  connectie.php - Verantwoordelijk voor de database verbinding
+    -> verbindMysqli($geefFoutmelding)
+       Deze functie maakt een nieuwe MySQLi class instantie aan en stuurt de gebruiker
+       door naar de offline pagina als er een foutmelding is. Dit gebeurt echter alleen
+       als $geefFoutmelding true is. Als deze niet true is dan wordt de fout op een andere
+       plek afgehandeld, buiten de functie.  
+    
+    -> sluitMysqli($connectie, ...$statements)
+       Deze functie verbreekt de connectie en eventuele meegegeven statements. Als een van
+       deze onderdelen mislukt wordt er een fout weergegeven in de server console, maar gaat
+       de uitvoering nog steeds door.
+
+  error.php - Verantwoordelijk voor foutmeldingen  
+    -> foutmelding($id, $continue, $message)
+       Deze functie geeft een foutmelding weer. Deze wordt overal gebruikt waar een foutmelding
+       moet worden weergegeven. 
+    
+    -> geefFoutmeldingWeer()
+       Deze functie geeft een eventuele foutmelding weer die wordt gegeven met de foutmelding
+       functie. Als er geen foutmelding in de GET zit, dan doet deze functie niks.
+
+    -> weZijnOffline()
+       Deze functie stuurt de gebruiker door naar de offline-pagina voor als database verbinding
+       mislukt.
+
+    -> Foutmeldingen
+       Deze enumeration bevat een lijst met foutmeldingen die kunnen worden weergegeven. Deze data
+       hoort altijd gelijk te lopen met de rijen in de errors tabel in de database.
+
+  gebruiker.php - Verantwoordelijk voor het verkrijgen van gebruikersinformatie
+    -> gebruikerOphalen($id)
+       Deze functie geeft een associative array terug met daarin de data van de gebruiker. Deze data
+       wordt opgehaald per ID vanuit de database.
+    
+  posts.php - Verantwoordelijk voor posts-data en posts UI
+    -> postsOphalen()
+       Deze functie haalt alle posts op die geen reactie zijn van een bovenliggende post
+
+    -> reactiesVanPost($id)
+       Deze functie haalt alle reacties van een post op door gebruik te maken van recursie
+
+    -> postsVanGebruiker($id)
+       Deze functie haalt de posts op van de gebruiker $id
+
+    -> postLijst($posts, $geenReacties)
+       Deze functie geeft de daadwerkelijke posts weer in de HTML
+  
+    -> genereerMinimalePostHtml($post, $gebruiker)
+       Deze functie genereert de minimale HTML van een POST (gebruikt voor het profiel)
+       
+    -> genereerPostHtml($post, $gebruiker, $isReactie)
+       Deze functie genereert de HTML voor het reactie-veld wat normaliter bij ieder bericht te zien is
+
+    -> reactieFormulier($post)
+       Deze functie genereert de HTML voor het reactie-veld wat normaliter bij ieder bericht te zien is
+
+    -> totaleLikes($posts)
+       Deze functie wordt gebruikt om het totaal aantal likes uit een lijst van posts te halen
+
+  session.php - Verantwoordelijk voor de sessie lezen en schrijven
+    -> verifieerIngelogd()
+       Dit is een van de meest essentiele functies. Het controleert of de
+       gebruiker is ingelogd, en stuurt de gebruiker terug naar de inlogpagina als dat niet zo is.
+
+    -> gebruikerUitSessie()
+       Deze functie haalt de gebruiker uit sessie
+
+    -> uitloggen()
+       Deze functie is gebruikt om de gebruiker uit te loggen.
+
+  succes.php - Verantwoordelijk voor de succes-berichten
+    -> geefSuccesWeer()
+       Deze functie geeft een succesmelding weer als iets is gelukt
+
+index.php - De home pagina van de site
+like.php - Deze pagina is verantwoordelijk voor het liken van een post
+login.php - De inlog-pagina van de site
+  -> gebruikerInloggen()
+     Deze functie wordt gebruikt om de gebruiker in te loggen met de POST data.
+
+offline.php - Deze pagina wordt weergegeven als er geen verbinding kon worden gemaakt met de database
+profiel.php - Deze pagina geeft het profiel en de posts weer van een specifieke gebruiker
+registreer.php - De registreer-pagina van de site
+  -> registreerGebruiker()
+     Deze functie wordt gebruikt om de gebruiker te registreren met de POST data.
+
+stuurpost.php - Deze pagina wordt gebruikt om een post te versturen.
+uitloggen.php - Deze pagina wordt gebruikt om de gebruiker uit te loggen.
+updatestatus.php - Deze pagina wordt gebruikt om de status te updaten.
+verwijder.php - Deze pagina wordt gebruikt om een post te verwijderen
