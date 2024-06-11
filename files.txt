@@ -78,7 +78,7 @@ util
        Deze functie is gebruikt om de gebruiker uit te loggen.
 
   toast.php - Verantwoordelijk voor de toast-berichten
-    -> geeftoastWeer()
+    -> geefToastWeer()
        Deze functie geeft een toastmelding weer als iets is gelukt
 
 index.php - De home pagina van de site

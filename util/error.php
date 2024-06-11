@@ -24,7 +24,7 @@ function foutmelding(Foutmeldingen $id, string $continue = "", string $message =
 function geefFoutmeldingWeer()
 {
   session_start(); // Start de sessie voor fout_details
-  geeftoastWeer(); // laat een eventuele toast zien als deze er is
+  geefToastWeer(); // laat een eventuele toast zien als deze er is
 
   // Als er geen foutmelding is, doe dan ook niks.
   if (!isset($_GET["error"], $_GET["continue"])) {

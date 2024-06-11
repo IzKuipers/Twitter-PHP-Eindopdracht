@@ -2,7 +2,7 @@
 require_once ("connectie.php");
 
 // Deze functie geeft een toastmelding weer als iets is gelukt
-function geeftoastWeer()
+function geefToastWeer()
 {
   // Als er geen toastmelding is, doe dan ook niks.
   if (!isset($_SESSION["toast"])) {
