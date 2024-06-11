@@ -35,6 +35,7 @@ form.post-form input[type="submit"] {
   border: none;
   font-weight: bold;
   margin-top: 5px;
+  margin-right: 5px;
 }
 
 form.post-form input[type="submit"]:hover {
