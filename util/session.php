@@ -38,5 +38,6 @@ function uitloggen()
   session_start(); // Start de session
 
   unset($_SESSION["gebruiker"]); // Haal de gebruiker uit de session
+  $_SESSION["succes"] = 6;
   header("location:/login.php"); // Stuur de gebruiker door naar het login scherm
 }

@@ -50,5 +50,6 @@ try { // Probeer...
   foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage()); // Het is niet gelukt om de post te verwijderen, geef een foutmelding
 } finally { // Ten slotte...
   sluitMysqli($connectie); // Sluit de connectie
-  echo "<script>history.back();</script>"; // Gebruik Javascript om de gebruiker terug te sturen naar de index pagina
+  $_SESSION["succes"] = 7;
+  header("location:/index.php");
 }

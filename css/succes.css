@@ -1,0 +1,30 @@
+div.succes-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+div.succes-wrapper div.succes {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(85, 156, 85);
+  color: white;
+  gap: 10px;
+  height: 45px;
+  transition: all 0.3s;
+  border: rgb(116, 212, 116) 1px solid;
+}
+
+div.succes-wrapper div.succes:not(.visible) {
+  translate: 0 -50px;
+  opacity: 0;
+  pointer-events: none;
+}

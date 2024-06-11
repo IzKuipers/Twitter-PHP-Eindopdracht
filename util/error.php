@@ -1,5 +1,6 @@
 <?php
 require_once ("connectie.php");
+require_once ("succes.php");
 
 session_start(); // Start de sessie als het bestand wordt geïmporteerd
 
@@ -22,6 +23,7 @@ function foutmelding(Foutmeldingen $id, string $continue = "", string $message =
 // Dankzij deze functie kan er op iedere pagina op dezelfde manier een foutmelding worden weergegeven.
 function geefFoutmeldingWeer()
 {
+  geefSuccesWeer();
   // Als er geen foutmelding is, doe dan ook niks.
   if (!isset($_GET["error"], $_GET["continue"])) {
     unset($_SESSION["error_message"]);

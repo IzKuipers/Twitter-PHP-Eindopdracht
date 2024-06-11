@@ -35,5 +35,9 @@ try { // Probeer...
   sluitMysqli($connectie, $statement);
 }
 
+$succesCode = !$reageertOp ? 3 : 5;
+
+$_SESSION["succes"] = $succesCode;
+
 // Stuur de gebruiker terug naar de index pagina
 header("location:/");

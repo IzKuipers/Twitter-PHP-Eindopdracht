@@ -51,5 +51,6 @@ try { // Probeer...
   foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage());
 } finally { // Ten slotte...
   sluitMysqli($connectie, $statement); // Probeer de connectie en tweede statement te sluiten
-  echo "<script>history.back();</script>"; // Echo een Javascript uitvoering om terug te gaan naar de vorige pagina
+  $_SESSION["succes"] = 4;
+  header("location:/");
 }

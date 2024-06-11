@@ -56,7 +56,8 @@ function gebruikerInloggen()
     $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
 
     // Stuur de gebruiker naar de homepagina
-    header("location: /index.php");
+    $_SESSION["succes"] = 2;
+    header("location: /");
   } catch (Exception $e) {
     foutmelding(Foutmeldingen::ControleMislukt, "/login.php", $e->getMessage()); // Geef een foutmelding weer
   } finally {
