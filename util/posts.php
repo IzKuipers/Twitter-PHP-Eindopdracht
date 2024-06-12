@@ -231,7 +231,7 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
   $aantal_likes = $post["likes"]; // De likes van de tweet
   $timestamp = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
 
-  $gebruikerId = $post["auteur"]["idGebruiker"];
+  $gebruikerId = $post["auteur"]["idGebruiker"]; // De ID van de auteur van de post
   $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"]; // Een boolean die aangeeft of de post van de ingelogde gebruiker is
   $gebruikersnaam = $post['auteur']['naam'] . ($postVanGebruiker ? " (jij)" : ""); // De gebruikersnaam die boven de post wordt weergegeven
 
@@ -244,48 +244,51 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
       </a>
       HTML : "";
 
-  $reactieForm = reactieFormulier($post);
+  $reactieForm = reactieFormulier($post); // Het reactie-formulier van de post
 
-  $classNaam = "post " . ($isReactie ? "reactie" : "");
-  $resultaat = "<div class='$classNaam'>";
-  $resultaat .= <<<HTML
-    <div class="post-content">
-    <!-- De linker kant: hier wordt de profielfoto weergegeven (een standaard foto in dit project) -->
-      <div class="left">
-        <img src="/images/pfp.png" alt="">
-      </div>
-      <!-- De rechter kant: hier wordt de content van de tweet weergegeven -->
-      <div class="right">
-        <!-- Boven de content: De auteur's naam + de ID van de post -->
-        <div class="auteur">
-          <span class="naam"><a href="/profiel.php?id=$gebruikerId">$gebruikersnaam</a></span>
-          <span class="id">· Post #$id</span>
-        </div>  
-        <!-- De content van de post, beschermd tegen XSS  -->
-        <div class="body">$bodyVeilig</div>
-        <!-- Boven de content: De auteur's naam + de ID van de post -->
-        <div class="actions">
-          <!-- De knop om een post te "liken" -->
-          <a href="/like.php?id=$id" class="like-button">
-            <span class='material-icons-round'>favorite_outline</span>
-            $aantal_likes
-          </a>
-          <!-- De knop om te reageren op een post -->
-          <a href="javascript:reactieFormulier('reactieForm_$id')">
-            <span class="material-icons-round">chat_bubble_outline</span>
-          </a>
-          <!-- De verwijder knop. Deze variabele is een lege string ("") als de post niet van de ingelogde gebruiker is -->
-          $verwijderKnop
-          
-          <!-- De geformatteerde datum en tijd van de post -->
-          <div class="timestamp">
-            $timestamp
+  $classNaam = "post " . ($isReactie ? "reactie" : ""); // De class van de post
+
+  // De uiteindelijke HTML van de post leeft hier
+  $resultaat = <<<HTML
+    <div class='$classNaam'>
+      <div class="post-content">
+      <!-- De linker kant: hier wordt de profielfoto weergegeven (een standaard foto in dit project) -->
+        <div class="left">
+          <img src="/images/pfp.png" alt="">
+        </div>
+        <!-- De rechter kant: hier wordt de content van de tweet weergegeven -->
+        <div class="right">
+          <!-- Boven de content: De auteur's naam + de ID van de post -->
+          <div class="auteur">
+            <span class="naam"><a href="/profiel.php?id=$gebruikerId">$gebruikersnaam</a></span>
+            <span class="id">· Post #$id</span>
+          </div>  
+          <!-- De content van de post, beschermd tegen XSS  -->
+          <div class="body">$bodyVeilig</div>
+          <!-- Boven de content: De auteur's naam + de ID van de post -->
+          <div class="actions">
+            <!-- De knop om een post te "liken" -->
+            <a href="/like.php?id=$id" class="like-button">
+              <span class='material-icons-round'>favorite_outline</span>
+              $aantal_likes
+            </a>
+            <!-- De knop om te reageren op een post -->
+            <a href="javascript:reactieFormulier('reactieForm_$id')">
+              <span class="material-icons-round">chat_bubble_outline</span>
+            </a>
+            <!-- De verwijder knop. Deze variabele is een lege string ("") als de post niet van de ingelogde gebruiker is -->
+            $verwijderKnop
+            
+            <!-- De geformatteerde datum en tijd van de post -->
+            <div class="timestamp">
+              $timestamp
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="post-reacties">
-      $reactieForm
+      <!-- De reacties van de post-->
+      <div class="post-reacties">
+        $reactieForm
     HTML;
 
   // Voor elke reactie van de post...
