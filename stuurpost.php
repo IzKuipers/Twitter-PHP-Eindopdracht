@@ -28,7 +28,8 @@ try { // Probeer...
   $statement->bind_param("siii", $bericht, $likes, $gebruiker["id"], $reageertOp); // Vervang de variabelen met hun specifieke waarden
   $statement->execute(); // Voer de vraag uit
 } catch (Exception $e) { // Anders...
-  foutmelding(Foutmeldingen::VersturenMislukt, "/index.php", $e->getMessage()); // Posten mislukt: geef een foutmelding weer
+  error_log($e->getMessage());
+  foutmelding(Foutmeldingen::VersturenMislukt, "/index.php"); // Posten mislukt: geef een foutmelding weer
 } finally { // Ten slotte...
   // Probeer de connectie en statement te sluiten
   sluitMysqli($connectie, $statement);

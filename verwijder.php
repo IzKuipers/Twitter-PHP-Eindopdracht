@@ -46,7 +46,8 @@ try { // Probeer...
   $statement->execute(); // Voer de vraag uit
   $statement->close(); // Sluit de verwijder statement
 } catch (Exception $e) { // Anders...
-  foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage()); // Het is niet gelukt om de post te verwijderen, geef een foutmelding
+  error_log($e->getMessage());
+  foutmelding(Foutmeldingen::PostLikeMislukt, "/"); // Het is niet gelukt om de post te verwijderen, geef een foutmelding
 } finally { // Ten slotte...
   sluitMysqli($connectie); // Sluit de connectie
   $_SESSION["toast"] = 7;

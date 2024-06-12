@@ -27,7 +27,8 @@ try { // Probeer...
   $statement->bind_param("si", $status, $gebruiker["id"]); // Vervang de vraagtekens met de respectieve waarden
   $statement->execute(); // Voer de vraag uit
 } catch (Exception $e) { // Anders...
-  foutmelding(Foutmeldingen::StatusUpdateMislukt, "/", $e->getMessage()); // Geef een foutmelding als de status niet kon worden geüpdatet
+  error_log($e->getMessage());
+  foutmelding(Foutmeldingen::StatusUpdateMislukt, "/"); // Geef een foutmelding als de status niet kon worden geüpdatet
 } finally { // Ten slotte...
   sluitMysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
   echo "<script>history.back();</script>"; // Stuur met Javascript de gebruiker terug naar de vorige pagina

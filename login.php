@@ -38,7 +38,7 @@ function gebruikerInloggen()
 
     // Controleer of de gebruiker bestaat
     if (!$idGebruiker) {
-      foutmelding(Foutmeldingen::GebruikerNietGevonden, "/login.php", "idGebruiker was NULL"); // Gebruiker bestaat niet, geef een foutmelding weer
+      foutmelding(Foutmeldingen::GebruikerNietGevonden, "/login.php", "Gebruiker $gebruikersnaam niet gevonden"); // Gebruiker bestaat niet, geef een foutmelding weer
 
       return;
     }
@@ -59,7 +59,8 @@ function gebruikerInloggen()
     $_SESSION["toast"] = 2;
     header("location: /");
   } catch (Exception $e) {
-    foutmelding(Foutmeldingen::ControleMislukt, "/login.php", $e->getMessage()); // Geef een foutmelding weer
+    error_log($e->getMessage());
+    foutmelding(Foutmeldingen::ControleMislukt, "/login.php"); // Geef een foutmelding weer
   } finally {
     sluitMysqli($connectie, $statement); // Probeer de connectie en statement te sluiten
   }

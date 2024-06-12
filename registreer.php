@@ -38,7 +38,8 @@ function registreerGebruiker()
     $statement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
     $statement->execute(); // Voer de vraag uit
   } catch (Exception $e) { // Anders...
-    foutmelding(Foutmeldingen::GebruikerBestaatAl, "/registreer.php", $e->getMessage()); // Geef een foutmelding weer als het niet is gelukt om de gebruiker aan te maken
+    error_log($e->getMessage());
+    foutmelding(Foutmeldingen::GebruikerBestaatAl, "/registreer.php"); // Geef een foutmelding weer als het niet is gelukt om de gebruiker aan te maken
 
     return;
   } finally { // Ten slotte...
