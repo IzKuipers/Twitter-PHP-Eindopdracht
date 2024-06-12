@@ -20,7 +20,7 @@ util
        de uitvoering nog steeds door.
 
   error.php - Verantwoordelijk voor foutmeldingen  
-    -> foutmelding($id, $continue, $message)
+    -> foutmelding($id, $vervolg, $bericht)
        Deze functie geeft een foutmelding weer. Deze wordt overal gebruikt waar een foutmelding
        moet worden weergegeven. 
     

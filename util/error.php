@@ -2,7 +2,7 @@
 require_once ("connectie.php");
 require_once ("toast.php");
 
-function foutmelding(Foutmeldingen $id, string $continue = "", string $message = "")
+function foutmelding(Foutmeldingen $id, string $vervolg = "", string $bericht = "")
 {
   session_start(); // Start de sessie voor fout_details
 
@@ -10,13 +10,14 @@ function foutmelding(Foutmeldingen $id, string $continue = "", string $message =
   $huidigeUrl = parse_url($aanvraagUri); // Verkrijg de individuele onderdelen van de URI in vorm van een associative array (URL pad als "path" en de GET parameters als "query")
   $paginaPad = $huidigeUrl['path']; // Het pad van de huidige PHP pagina
 
-  $_SESSION["fout_details"] = $message; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geefFoutmeldingWeer()
+  $id = $id->value; // Haal de daadwerkelijke ID uit de enumeratie
 
-  $id = $id->value;
+  $_SESSION["error_id"] = $id; // Schrijf de Error ID naar de session
+  $_SESSION["vervolg"] = $vervolg; // Schrijf het vervolg (de actie van de 'Sluiten' knop) naar de session
+  $_SESSION["fout_details"] = $bericht; // Zet de eventuele technische informatie in de session voor wanneer de foutmelding wordt weergegeven met geefFoutmeldingWeer()
 
-  // Voeg de fout-ID en "continue" (de locatie van de 'Sluiten' knop) toe aan de GET parameters.
-  // Enige POST wordt hier weggegooid, maar dat is dan toch niet meer relevant.
-  header("location: $paginaPad?error=$id&continue=$continue");
+  // Herlaad de pagina. Enige POST wordt hier weggegooid, maar dat is dan toch niet meer relevant.
+  header("location: $paginaPad");
 }
 
 // Deze foutmelding maakt de daadwerkelijke foutmelding die aan de gebruiker wordt weergegeven.
@@ -27,23 +28,25 @@ function geefFoutmeldingWeer()
   geefToastWeer(); // laat een eventuele toast zien als deze er is
 
   // Als er geen foutmelding is, doe dan ook niks.
-  if (!isset($_GET["error"], $_GET["continue"])) {
+  if (!isset($_SESSION["error_id"], $_SESSION["vervolg"])) {
+    // Haal de details voor de zekerheid uit de session omdat we deze niet controleren. De fout_details zijn optioneel.
     unset($_SESSION["fout_details"]);
-    return;
+
+    return; // Stop.
   }
 
-  $id = $_GET["error"]; // De ID van de foutmelding
-  $continue = $_GET["continue"]; // De href van de 'Sluiten'-knop
+  $id = $_SESSION["error_id"]; // De ID van de foutmelding
+  $vervolg = $_SESSION["vervolg"]; // De href van de 'Sluiten'-knop
+  $details = (isset($_SESSION["fout_details"]) ? $_SESSION["fout_details"] : "(geen)"); // De technische informatie, met een ternary operator om te checken of die informatie ook echt is meegestuurd met de foutmelding
+
+  // We hebben de foutgegevens nu gebruikt, dus eet ze op omdat we ze niet meer nodig hebben.
+  unset($_SESSION["fout_details"], $_SESSION["error_id"], $_SESSION["vervolg"]);
 
   // Verbind met de database, maar gooi geen foutmelding als de connectie is mislukt ($geef_foutmelding == false)
   $connectie = verbindMysqli(false);
 
   $titel = ""; // Titel van de dialoog
   $foutmelding = ""; // Foutmelding van de dialoog
-  $details = (isset($_SESSION["fout_details"]) ? $_SESSION["fout_details"] : "(geen)"); // De technische informatie, met een ternary operator om te checken of die informatie ook echt is meegestuurd met de foutmelding
-
-  // We hebben de fout_details nu gebruikt, dus eet hem op omdat we hem niet meer nodig hebben.
-  unset($_SESSION["fout_details"]);
 
   try { // Probeer...
     if (!$connectie) {
@@ -87,7 +90,7 @@ function geefFoutmeldingWeer()
           <p class="details">Details: <span>$details</span></p>
         </div>
         <div class="bottom">
-          <a href="$continue">Sluiten</a>
+          <a href="$vervolg">Sluiten</a>
         </div>
       </div>
     </div>
