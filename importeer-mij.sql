@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `gebruikers` (
   `wachtwoord` varchar(60) NOT NULL,
   PRIMARY KEY (`idGebruiker`),
   UNIQUE KEY `naam` (`naam`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `repliesTo` int(11) DEFAULT NULL,
   PRIMARY KEY (`idPost`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
