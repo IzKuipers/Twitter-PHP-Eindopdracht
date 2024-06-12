@@ -14,6 +14,7 @@ if (!isset($_POST["bericht"])) {
 $gebruiker = gebruikerUitSessie(); // Haal de gebruiker op uit de sessie
 
 $bericht = $_POST["bericht"]; // Het bericht van de gebruiker
+$berichtVeilig = $_POST["bericht"]; // Het bericht van de gebruiker, beveiligd tegen XSS
 $reageertOp = isset($_POST["reactieOp"]) ? $_POST["reactieOp"] : NULL;
 $likes = 0; // De likes van de post (standaard 0)
 
@@ -25,7 +26,7 @@ try { // Probeer...
   $query = "INSERT INTO posts(body,likes,auteur,repliesTo) VALUES (?,?,?,?)";
 
   $statement = $connectie->prepare($query); // Bereid de vraag voor
-  $statement->bind_param("siii", $bericht, $likes, $gebruiker["id"], $reageertOp); // Vervang de variabelen met hun specifieke waarden
+  $statement->bind_param("siii", $berichtVeilig, $likes, $gebruiker["id"], $reageertOp); // Vervang de variabelen met hun specifieke waarden
 
   if (!($statement->execute()))
     throw new Exception(); // Voer de vraag uit

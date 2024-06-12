@@ -19,6 +19,7 @@ function gebruikerInloggen()
   }
 
   $gebruikersnaam = $_POST["gebruikersnaam"]; // De gebruikersnaam die de gebruiker heeft ingevoerd
+  $gebruikersnaamVeilig = htmlspecialchars($gebruikersnaam);
   $wachtwoord = $_POST["wachtwoord"]; // Het wachtwoord die de gebruiker heeft ingevoerd
 
   // Maak verbinding met de database
@@ -35,9 +36,11 @@ function gebruikerInloggen()
     $query = "SELECT idGebruiker,wachtwoord,status FROM gebruikers WHERE naam=?";
 
     $statement = $connectie->prepare($query); // Bereid de vraag voor
-    $statement->bind_param("s", $gebruikersnaam); // Vervang het vraagteken met de daadwerkelijke gebruikersnaam
+    $statement->bind_param("s", $gebruikersnaamVeilig); // Vervang het vraagteken met de daadwerkelijke gebruikersnaam
+
     if (!($statement->execute()))
       throw new Exception(); // Voer de vraag uit
+
     $statement->bind_result($idGebruiker, $wachtwoordHash, $status); // Schrijf het resultaat naar de respectieve variabelen
     $statement->fetch(); // Vraag het resultaat op. Dit hoeft maar eenmalig te gebeuren omdat ID's uniek zijn
 

@@ -170,7 +170,6 @@ function postLijst($posts, $geenReacties = false)
 function genereerMinimalePostHtml($post, $gebruiker)
 {
   $body = $post['body']; // De content van de tweet
-  $bodyVeilig = htmlspecialchars($body); // De content van de tweet, beveiligd tegen XSS
   $id = $post['id']; // De ID van de tweet
   $aantal_likes = $post["likes"]; // De likes van de tweet
   $datumtijd = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
@@ -204,7 +203,7 @@ function genereerMinimalePostHtml($post, $gebruiker)
             <span class="id">· Post #$id</span>
           </div>  
           <!-- De content van de post, beschermd tegen XSS  -->
-          <div class="body">$bodyVeilig</div>
+          <div class="body">$body</div>
           <!-- Boven de content: De auteur's naam + de ID van de post -->
           <div class="actions">
             <!-- De knop om een post te "liken" -->
@@ -232,7 +231,6 @@ function genereerMinimalePostHtml($post, $gebruiker)
 function genereerPostHtml($post, $gebruiker, $isReactie = false)
 {
   $body = $post['body']; // De content van de tweet
-  $bodyVeilig = htmlspecialchars($body); // De content van de tweet, beveiligd tegen XSS
   $id = $post['id']; // De ID van de tweet
   $aantal_likes = $post["likes"]; // De likes van de tweet
   $timestamp = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
@@ -270,7 +268,7 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
             <span class="id">· Post #$id</span>
           </div>  
           <!-- De content van de post, beschermd tegen XSS  -->
-          <div class="body">$bodyVeilig</div>
+          <div class="body">$body</div>
           <!-- Boven de content: De auteur's naam + de ID van de post -->
           <div class="actions">
             <!-- De knop om een post te "liken" -->
