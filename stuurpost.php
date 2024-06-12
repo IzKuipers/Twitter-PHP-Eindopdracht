@@ -14,7 +14,7 @@ if (!isset($_POST["bericht"])) {
 $gebruiker = gebruikerUitSessie(); // Haal de gebruiker op uit de sessie
 
 $bericht = $_POST["bericht"]; // Het bericht van de gebruiker
-$berichtVeilig = $_POST["bericht"]; // Het bericht van de gebruiker, beveiligd tegen XSS
+$berichtVeilig = htmlspecialchars($_POST["bericht"]); // Het bericht van de gebruiker, beveiligd tegen XSS
 $reageertOp = isset($_POST["reactieOp"]) ? $_POST["reactieOp"] : NULL;
 $likes = 0; // De likes van de post (standaard 0)
 
@@ -30,6 +30,7 @@ try { // Probeer...
 
   if (!($statement->execute()))
     throw new Exception(); // Voer de vraag uit
+
 } catch (Exception $e) { // Anders...
   error_log($e->getMessage());
   foutmelding(Foutmeldingen::VersturenMislukt, "/index.php"); // Posten mislukt: geef een foutmelding weer

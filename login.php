@@ -61,7 +61,7 @@ function gebruikerInloggen()
     }
 
     // Schrijf de eigenschappen van de gebruiker naar de session om later te gebruiken
-    $_SESSION["gebruiker"] = array("naam" => $gebruikersnaam, "idGebruiker" => $idGebruiker, "status" => $status);
+    $_SESSION["gebruiker"] = array("naam" => $gebruikersnaamVeilig, "idGebruiker" => $idGebruiker, "status" => $status);
 
     // Stuur de gebruiker naar de homepagina
     $_SESSION["toast"] = 2;
