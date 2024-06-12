@@ -28,7 +28,10 @@ try { // Probeer...
 
   $statement = $connectie->prepare($query); // Bereid de vraag voor
   $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-  $statement->execute(); // Voer de vraag uit
+
+  if (!($statement->execute()))
+    throw new Exception(); // Voer de vraag uit
+
   $statement->bind_result($postAuteurId); // Schrijf het resultaat naar $postAuteurId
   $statement->fetch(); // Voer fetch uit om $postAuteurId te schrijven. Dit hoeft maar één keer omdat ID's uniek zijn
   $statement->close(); // Sluit de auteur statement
@@ -43,7 +46,10 @@ try { // Probeer...
 
   $statement = $connectie->prepare($query); // Bereid de vraag voor
   $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-  $statement->execute(); // Voer de vraag uit
+
+  if (!($statement->execute()))
+    throw new Exception(); // Voer de vraag uit
+
   $statement->close(); // Sluit de verwijder statement
 } catch (Exception $e) { // Anders...
   error_log($e->getMessage());

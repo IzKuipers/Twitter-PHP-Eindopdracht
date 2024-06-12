@@ -26,7 +26,9 @@ try { // Probeer...
 
   $statement = $connectie->prepare($query); // Bereid de vraag voor
   $statement->bind_param("siii", $bericht, $likes, $gebruiker["id"], $reageertOp); // Vervang de variabelen met hun specifieke waarden
-  $statement->execute(); // Voer de vraag uit
+
+  if (!($statement->execute()))
+    throw new Exception(); // Voer de vraag uit
 } catch (Exception $e) { // Anders...
   error_log($e->getMessage());
   foutmelding(Foutmeldingen::VersturenMislukt, "/index.php"); // Posten mislukt: geef een foutmelding weer

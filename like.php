@@ -34,7 +34,12 @@ try { // Probeer...
 
   $statement = $connectie->prepare($query); // Bereid de vraag voor
   $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-  $statement->execute(); // Voer de vraag uit
+
+  // Voer de eerste vraag uit
+  if (!($statement->execute())) {
+    throw new Exception();
+  }
+
   $statement->bind_result($likes); // Schrijf de likes naar de $likes variabele
   $statement->fetch(); // Vraag het resultaat eenmalig op: ID's zijn uniek dus een while loop is overbodig 
   $statement->close(); // Sluit de eerste statement
@@ -46,7 +51,11 @@ try { // Probeer...
 
   $statement = $connectie->prepare($query); // Bereid de tweede vraag voor
   $statement->bind_param("ii", $likes, $id); // Vervang het vraagteken met de daadwerkelijke ID
-  $statement->execute(); // Voer de tweede vraag uit
+
+  // Voer de tweede vraag uit
+  if (!($statement->execute())) {
+    throw new Exception();
+  }
 } catch (Exception $e) { // Anders...
   error_log($e->getMessage());
   foutmelding(Foutmeldingen::PostLikeMislukt, "/");

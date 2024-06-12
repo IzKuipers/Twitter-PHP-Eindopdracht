@@ -14,7 +14,9 @@ function postsOphalen()
     $query = "SELECT * FROM posts WHERE repliesTo IS NULL ORDER BY timestamp DESC";
 
     $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
-    $statement->execute(); // Voer de vraag uit 
+
+    if (!($statement->execute()))
+      throw new Exception(); // Voer de vraag uit
 
     $result = array();
 
@@ -51,7 +53,9 @@ function reactiesVanPost($id)
 
     $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
     $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-    $statement->execute(); // Voer de vraag uit 
+
+    if (!($statement->execute()))
+      throw new Exception(); // Voer de vraag uit
 
     $result = array();
 
@@ -89,7 +93,9 @@ function postsVanGebruiker($id)
 
     $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
     $statement->bind_param("i", $id);
-    $statement->execute(); // Voer de vraag uit 
+
+    if (!($statement->execute()))
+      throw new Exception(); // Voer de vraag uit
 
     $result = array();
 

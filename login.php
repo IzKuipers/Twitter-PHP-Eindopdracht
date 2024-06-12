@@ -36,7 +36,8 @@ function gebruikerInloggen()
 
     $statement = $connectie->prepare($query); // Bereid de vraag voor
     $statement->bind_param("s", $gebruikersnaam); // Vervang het vraagteken met de daadwerkelijke gebruikersnaam
-    $statement->execute(); // Voer de vraag uit
+    if (!($statement->execute()))
+      throw new Exception(); // Voer de vraag uit
     $statement->bind_result($idGebruiker, $wachtwoordHash, $status); // Schrijf het resultaat naar de respectieve variabelen
     $statement->fetch(); // Vraag het resultaat op. Dit hoeft maar eenmalig te gebeuren omdat ID's uniek zijn
 

@@ -59,7 +59,9 @@ function geefFoutmeldingWeer()
 
     $statement = $connectie->prepare($query); // Bereid de vraag aan de database voor
     $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
-    $statement->execute(); // Voer de statement uit
+
+    if (!($statement->execute()))
+      throw new Exception(); // Voer de vraag uit
 
     $statement->bind_result($id, $titel, $foutmelding); // Schrijf het resultaat naar de respectieve variabelen. De volgorde is hetzelfde als in de tabel.
     $statement->fetch(); // We hoeven fetch() maar eenmalig op te roepen omdat ID's toch uniek zijn, een while loop is hier overbodig.

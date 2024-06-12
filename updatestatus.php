@@ -25,7 +25,9 @@ try { // Probeer...
 
   $statement = $connectie->prepare($query); // Bereid de vraag voor
   $statement->bind_param("si", $status, $gebruiker["id"]); // Vervang de vraagtekens met de respectieve waarden
-  $statement->execute(); // Voer de vraag uit
+
+  if (!($statement->execute()))
+    throw new Exception(); // Voer de vraag uit
 } catch (Exception $e) { // Anders...
   error_log($e->getMessage());
   foutmelding(Foutmeldingen::StatusUpdateMislukt, "/"); // Geef een foutmelding als de status niet kon worden geüpdatet
