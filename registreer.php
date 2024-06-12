@@ -4,6 +4,10 @@ require_once ("./util/error.php");
 weZijnMisschienOffline(); // Controleer of de database online is
 geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 
+if (isset($_SESSION["gebruiker"])) {
+  header("location:/");
+}
+
 // Deze functie wordt gebruikt om de gebruiker te registreren via de POST data
 function registreerGebruiker()
 {
@@ -25,7 +29,7 @@ function registreerGebruiker()
   }
 
   // Hash het wachtwoord met de builtin hashing-functie password_hash()
-  $hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
+  $wachtwoordHash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
   // Maak verbinding met de database
   $connectie = verbindMysqli();
@@ -35,7 +39,7 @@ function registreerGebruiker()
     $query = "INSERT INTO gebruikers(naam,wachtwoord) values (?,?)";
 
     $statement = $connectie->prepare($query); // Bereid de vraag voor
-    $statement->bind_param("ss", $gebruikersnaamVeilig, $hash); // Vervang de vraagtekens met hun respectieve waarden
+    $statement->bind_param("ss", $gebruikersnaamVeilig, $wachtwoordHash); // Vervang de vraagtekens met hun respectieve waarden
     $statement->execute(); // Voer de vraag uit
   } catch (Exception $e) { // Anders...
     error_log($e->getMessage());

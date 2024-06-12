@@ -7,14 +7,14 @@ function verbindMysqli($geefFoutmelding = true)
   //
   // - Izaak Kuipers, June 9th 2024 @ 1:14PM
 
-  $host = "127.0.0.1"; // De hostname (of evt. de IP) van de SQL database (op Linux is het 127.0.0.1 in plaats van localhost)
-  $user = "root"; // De gebruikersnaam van de database
-  $pass = ""; // Het wachtwoord van de database gebruiker
+  $hostnaam = "127.0.0.1"; // De hostname (of evt. de IP) van de SQL database (op Linux is het 127.0.0.1 in plaats van localhost)
+  $gebruiker = "root"; // De gebruikersnaam van de database
+  $wachtwoord = ""; // Het wachtwoord van de database gebruiker
   $database = "twitter"; // De SQL database om mee te verbinden (zie importeer-mij.sql voor de database import)
 
   try { // Probeer...
     // Maak een nieuwe MySQLi class instantie aan om met de database te communiceren
-    $connectie = new mysqli($host, $user, $pass, $database);
+    $connectie = new mysqli($hostnaam, $gebruiker, $wachtwoord, $database);
 
     // Check of de connectie is voltooid
     if ($connectie->connect_error) {
@@ -48,7 +48,7 @@ function sluitMysqli($connectie, ...$statements)
       } catch (Exception $e) {
         // Gooi een foutmelding in de console. Dit is voor de server manager/developer, dit krijgt de gebruiker nooit te zien.
         // Een foutmelding zal hier alleen voorkomen als de statement al ergens anders is gesloten.
-        printf("Statement sluiten onderbroken: " . $e->getMessage());
+        error_log("Statement sluiten onderbroken: " . $e->getMessage());
       }
     }
   }
@@ -60,7 +60,7 @@ function sluitMysqli($connectie, ...$statements)
     } catch (Exception $e) {
       // Gooi een foutmelding in de console. Dit is voor de server manager/developer, dit krijgt de gebruiker nooit te zien.
       // Een foutmelding zal hier alleen voorkomen als de connectie al ergens anders is gesloten.
-      printf("Connectie sluiten onderbroken: " . $e->getMessage());
+      error_log("Connectie sluiten onderbroken: " . $e->getMessage());
     }
   }
 }

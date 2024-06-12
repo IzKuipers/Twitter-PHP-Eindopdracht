@@ -15,7 +15,7 @@ function geefToastWeer()
   // Verbind met de database, maar gooi geen toastmelding als de connectie is mislukt ($geefFoutmelding == false)
   $connectie = verbindMysqli(false);
 
-  $icon = "check_circle";
+  $icoon = "check_circle";
   $bericht = ""; // Bericht van de toast
 
   try { // Probeer...
@@ -31,7 +31,7 @@ function geefToastWeer()
     $statement->bind_param("i", $id); // Vervang het vraagteken met de daadwerkelijke ID
     $statement->execute(); // Voer de statement uit
 
-    $statement->bind_result($id, $bericht, $icon, $type); // Schrijf het resultaat naar de respectieve variabelen. De volgorde is hetzelfde als in de tabel.
+    $statement->bind_result($id, $bericht, $icoon, $type); // Schrijf het resultaat naar de respectieve variabelen. De volgorde is hetzelfde als in de tabel.
     $statement->fetch(); // We hoeven fetch() maar eenmalig op te roepen omdat ID's toch uniek zijn, een while loop is hier overbodig.
 
     // De $bericht variabele is NULL omdat de toastmelding niet bestaat
@@ -68,7 +68,7 @@ function geefToastWeer()
       <link rel="stylesheet" href="/css/toast.css">
       <div class="toast-wrapper" id="toastWrapper">
         <div class="toast $type">
-          <span class="material-icons-round">$icon</span>
+          <span class="material-icons-round">$icoon</span>
           <span class="bericht">$bericht</span>
         </div>
       </div>

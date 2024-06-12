@@ -167,7 +167,7 @@ function genereerMinimalePostHtml($post, $gebruiker)
   $bodyVeilig = htmlspecialchars($body); // De content van de tweet, beveiligd tegen XSS
   $id = $post['id']; // De ID van de tweet
   $aantal_likes = $post["likes"]; // De likes van de tweet
-  $timestamp = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
+  $datumtijd = date("j M · G:i", strtotime($post["timestamp"])); // Een nette datum en tijd die onder aan de post wordt weergegeven
 
   $gebruikerId = $post["auteur"]["idGebruiker"];
   $postVanGebruiker = $gebruiker["id"] == $post["auteur"]["idGebruiker"]; // Een boolean die aangeeft of de post van de ingelogde gebruiker is
@@ -210,7 +210,7 @@ function genereerMinimalePostHtml($post, $gebruiker)
             $verwijderKnop
             <!-- De geformatteerde datum en tijd van de post -->
             <div class="timestamp">
-              $timestamp
+              $datumtijd
             </div>
           </div>
         </div>
@@ -270,12 +270,13 @@ function genereerPostHtml($post, $gebruiker, $isReactie = false)
             <span class='material-icons-round'>favorite_outline</span>
             $aantal_likes
           </a>
-          <!-- De verwijder knop. Deze variabele is een lege string ("") als de post niet van de ingelogde gebruiker is -->
-          $verwijderKnop
           <!-- De knop om te reageren op een post -->
           <a href="javascript:reactieFormulier('reactieForm_$id')">
             <span class="material-icons-round">chat_bubble_outline</span>
           </a>
+          <!-- De verwijder knop. Deze variabele is een lege string ("") als de post niet van de ingelogde gebruiker is -->
+          $verwijderKnop
+          
           <!-- De geformatteerde datum en tijd van de post -->
           <div class="timestamp">
             $timestamp

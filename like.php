@@ -12,7 +12,8 @@ geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 $connectie = verbindMysqli();
 
 if (!$connectie) { // Connectie mislukt, geef een foutmelding en stop.
-  foutmelding(Foutmeldingen::VerbindingMislukt, "/", $e->getMessage());
+  error_log($e->getMessage());
+  foutmelding(Foutmeldingen::VerbindingMislukt, "/");
 
   die;
 }
@@ -47,7 +48,8 @@ try { // Probeer...
   $statement->bind_param("ii", $likes, $id); // Vervang het vraagteken met de daadwerkelijke ID
   $statement->execute(); // Voer de tweede vraag uit
 } catch (Exception $e) { // Anders...
-  foutmelding(Foutmeldingen::PostLikeMislukt, "/", $e->getMessage());
+  error_log($e->getMessage());
+  foutmelding(Foutmeldingen::PostLikeMislukt, "/");
 } finally { // Ten slotte...
   sluitMysqli($connectie, $statement); // Probeer de connectie en tweede statement te sluiten
   $_SESSION["toast"] = 4;
