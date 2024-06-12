@@ -2,7 +2,6 @@ div.post-lijst {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: 20px;
 }
 
 div.post-lijst div.post div.post-content > div.right {

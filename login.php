@@ -3,6 +3,7 @@
 require_once ("./util/error.php");
 require_once ("./util/session.php");
 
+weZijnMisschienOffline(); // Controleer of de database online is
 geefFoutmeldingWeer(); // Geef de eventuele foutmelding weer
 
 // Deze functie wordt gebruikt om de gebruiker in te loggen via de POST data

@@ -100,6 +100,17 @@ function weZijnOffline()
   header("location:/offline.php"); // Stuur de gebruiker naar de offline-pagina
 }
 
+function weZijnMisschienOffline()
+{
+  $online = isDatabaseOnline();
+
+  if (!$online) {
+    weZijnOffline();
+
+    die;
+  }
+}
+
 // Ik gebruik een enumeration om de foutcodes op een centrale
 // manier te noteren om ze gemakkelijk te kunnen veranderen.
 // 

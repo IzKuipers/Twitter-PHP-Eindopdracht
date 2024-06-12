@@ -1,6 +1,7 @@
 <?php
 require_once ("./util/error.php");
 
+weZijnMisschienOffline(); // Controleer of de database online is
 geefFoutmeldingWeer(); // Geef een eventuele foutmelding weer
 
 // Deze functie wordt gebruikt om de gebruiker te registreren via de POST data

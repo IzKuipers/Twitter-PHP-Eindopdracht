@@ -64,3 +64,15 @@ function sluitMysqli($connectie, ...$statements)
     }
   }
 }
+
+function isDatabaseOnline()
+{
+  $connectie = verbindMysqli(false);
+
+  if (!$connectie)
+    return false;
+
+  sluitMysqli($connectie);
+
+  return true;
+}
