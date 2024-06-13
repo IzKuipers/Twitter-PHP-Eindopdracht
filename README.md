@@ -8,4 +8,4 @@ Izaak Kuipers <izaak.kuipers@gmail.com>
 
 ## License
 
-Geen.
+MIT
