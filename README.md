@@ -2,6 +2,8 @@
 
 In deze eindopdracht maak ik Twitter na om mijn vaardigheden van onder andere CRUD, PHP, XSS, hashing etc aan te tonen. Het project bestaat uit een modulair verbindings systeem, foutmelding-dialoog, mobiele ondersteuning, een offline-pagina, server-side foutmeldingen, etc.
 
+> Note to the ArcOS Team: yes it is school stuff, no need to touch this repo.
+
 ## Installatie
 Volg de onderstaande instructies om dit project werkend te krijgen:
 
